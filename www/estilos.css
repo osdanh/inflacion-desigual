@@ -1,0 +1,84 @@
+:root {
+  --guinda: #8E1F38;
+  --azul: #1F6FA8;
+  --tinta: #22262A;
+  --tinta-2: #5B6168;
+  --tenue: #9AA0A6;
+  --borde: #E3E5E8;
+  --fondo: #F6F5F3;
+  --superficie: #FFFFFF;
+}
+
+body {
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  font-size: 15px;
+}
+
+/* barra superior: franja guinda y título */
+.navbar {
+  border-top: 4px solid var(--guinda);
+  border-bottom: 1px solid var(--borde);
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+.navbar-brand {
+  font-weight: 700;
+  color: var(--tinta) !important;
+  letter-spacing: -0.01em;
+}
+.navbar .nav-link { color: var(--tinta-2); font-weight: 500; }
+.navbar .nav-link.active { color: var(--guinda) !important; }
+
+/* barra lateral */
+.bslib-sidebar-layout > .sidebar { background: var(--superficie); border-right: 1px solid var(--borde); }
+.sidebar .control-label, .sidebar label.form-label { font-weight: 600; font-size: 0.86rem; color: var(--tinta); }
+.sidebar .form-select, .sidebar .form-check-label { font-size: 0.9rem; }
+.ayuda { font-size: 0.82rem; color: var(--tinta-2); line-height: 1.4; margin-bottom: 0.5rem; }
+.ayuda.aviso { color: var(--guinda); }
+
+/* tarjetas de cifras */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+.tj-etiqueta { font-size: 0.8rem; color: var(--tinta-2); font-weight: 500; }
+.tj-valor { font-size: 1.75rem; font-weight: 700; line-height: 1.15; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.tj-valor.guinda { color: var(--guinda); }
+.tj-valor.azul { color: var(--azul); }
+.tj-nota { font-size: 0.78rem; color: var(--tenue); }
+
+/* tarjetas de gráficas */
+.card {
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  box-shadow: none;
+  margin-bottom: 14px;
+}
+.card-header {
+  background: var(--superficie);
+  border-bottom: none;
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--tinta);
+  padding-bottom: 0;
+}
+.nota-grafica { font-size: 0.8rem; color: var(--tinta-2); margin: 0.25rem 0 0; }
+
+/* deslizadores con el acento guinda */
+.irs--shiny .irs-bar { background: var(--guinda); border-color: var(--guinda); }
+.irs--shiny .irs-single, .irs--shiny .irs-from, .irs--shiny .irs-to { background: var(--guinda); }
+.irs--shiny .irs-handle { border-color: var(--guinda); }
+
+.metodo { max-width: 780px; margin: 1.2rem auto 2rem; padding: 0 1rem; line-height: 1.6; }
+.metodo h3 { font-size: 1.1rem; font-weight: 700; margin-top: 1.4rem; color: var(--tinta); }
+.pie { font-size: 0.78rem; color: var(--tinta-2); padding: 0.8rem 1.2rem 1.2rem; }
