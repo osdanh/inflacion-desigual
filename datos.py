@@ -97,3 +97,35 @@ def ancha(quintil, rubro, medida):
 def a_mes(fecha):
     """Primer día del mes de una fecha del deslizador."""
     return pd.Timestamp(fecha.year, fecha.month, 1)
+
+
+# --- un experimento: la frontera norte en enero de 2019 (tablas de construir_frontera.py)
+FR_TRATADA = "02"                                  # Baja California: toda la entidad está en la zona
+FR_FRONTERIZAS = ["02", "28", "08", "05", "26", "19"]
+FR_INICIO = pd.Timestamp(2019, 1, 1)               # entra en vigor el decreto
+FR_TRASLADO = 100 * (1.08 / 1.16 - 1)              # -6.9 %: el precio final si todo el recorte del IVA llega al consumidor
+FR_PRINCIPAL = "mismos meses"                      # julio a diciembre de 2019 contra los mismos meses de 2018
+FR_TIPOS = ["Bienes con IVA", "Gasolinas", "Electricidad", "Lo demás"]
+
+fr_eventos = leer("frontera_eventos.csv", dtype={"cve_ent": str}, parse_dates=["fecha"])
+fr_entidades = leer("frontera_entidades.csv", dtype={"cve_ent": str})
+fr_resumen = leer("frontera_resumen.csv")
+fr_estados = leer("frontera_estados.csv", dtype={"cve_ent": str}).fillna({"ciudades_en_la_zona": ""})
+fr_incidencia = leer("frontera_incidencia.csv")
+FR_CLASE = dict(zip(fr_resumen["canasta"], fr_resumen["clase"]))
+FR_CON_MESES = list(dict.fromkeys(fr_eventos["canasta"]))      # la luz y el total no tienen trayectoria mensual comparable
+_FR_ANCHAS = {}
+
+
+def fr_ancha(canasta):
+    """Meses en renglones y entidades en columnas: brecha de cada entidad contra las no fronterizas, en %."""
+    if canasta not in _FR_ANCHAS:
+        d = fr_eventos[fr_eventos["canasta"] == canasta]
+        _FR_ANCHAS[canasta] = d.pivot(index="fecha", columns="cve_ent", values="brecha")
+    return _FR_ANCHAS[canasta]
+
+
+def fr_efectos(canasta, medida=FR_PRINCIPAL):
+    """El efecto de una canasta para las 32 entidades (cada una contra las no fronterizas), en %."""
+    d = fr_entidades[(fr_entidades["canasta"] == canasta) & (fr_entidades["medida"] == medida)]
+    return d.set_index("cve_ent")["efecto"]

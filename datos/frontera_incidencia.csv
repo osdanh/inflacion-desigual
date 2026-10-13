@@ -1,0 +1,71 @@
+﻿corte,nivel,tipo,hogares_muestra,participacion,efecto,efecto_dic_2019,placebo_min,placebo_p05,placebo_p95,placebo_max,rango,valor_p
+decil,I,Total,155.000,100.000,-1.269,-2.163,-0.733,-0.561,0.628,1.136,1.000,0.037
+decil,I,Bienes con IVA,155.000,24.200,-0.868,,,,,,,
+decil,I,Gasolinas,155.000,5.439,-0.351,,,,,,,
+decil,I,Electricidad,155.000,2.021,-0.138,,,,,,,
+decil,I,Lo demás,155.000,68.340,0.088,,,,,,,
+decil,II,Total,246.000,100.000,-1.239,-1.981,-0.642,-0.580,0.537,0.960,1.000,0.037
+decil,II,Bienes con IVA,246.000,21.510,-0.759,,,,,,,
+decil,II,Gasolinas,246.000,4.521,-0.336,,,,,,,
+decil,II,Electricidad,246.000,3.944,-0.270,,,,,,,
+decil,II,Lo demás,246.000,70.025,0.125,,,,,,,
+decil,III,Total,330.000,100.000,-1.349,-2.079,-0.625,-0.615,0.533,1.132,1.000,0.037
+decil,III,Bienes con IVA,330.000,22.407,-0.827,,,,,,,
+decil,III,Gasolinas,330.000,6.073,-0.445,,,,,,,
+decil,III,Electricidad,330.000,2.296,-0.157,,,,,,,
+decil,III,Lo demás,330.000,69.225,0.079,,,,,,,
+decil,IV,Total,369.000,100.000,-1.462,-2.139,-0.682,-0.579,0.596,1.101,1.000,0.037
+decil,IV,Bienes con IVA,369.000,21.310,-0.816,,,,,,,
+decil,IV,Gasolinas,369.000,5.895,-0.427,,,,,,,
+decil,IV,Electricidad,369.000,2.871,-0.196,,,,,,,
+decil,IV,Lo demás,369.000,69.924,-0.023,,,,,,,
+decil,V,Total,357.000,100.000,-1.425,-2.077,-0.837,-0.675,0.630,1.085,1.000,0.037
+decil,V,Bienes con IVA,357.000,21.618,-0.814,,,,,,,
+decil,V,Gasolinas,357.000,7.160,-0.531,,,,,,,
+decil,V,Electricidad,357.000,2.816,-0.193,,,,,,,
+decil,V,Lo demás,357.000,68.406,0.112,,,,,,,
+decil,VI,Total,354.000,100.000,-1.712,-2.460,-0.632,-0.612,0.668,1.204,1.000,0.037
+decil,VI,Bienes con IVA,354.000,22.391,-0.902,,,,,,,
+decil,VI,Gasolinas,354.000,8.962,-0.647,,,,,,,
+decil,VI,Electricidad,354.000,2.466,-0.168,,,,,,,
+decil,VI,Lo demás,354.000,66.181,0.005,,,,,,,
+decil,VII,Total,405.000,100.000,-1.683,-2.356,-0.577,-0.530,0.729,1.068,1.000,0.037
+decil,VII,Bienes con IVA,405.000,21.035,-0.789,,,,,,,
+decil,VII,Gasolinas,405.000,9.818,-0.714,,,,,,,
+decil,VII,Electricidad,405.000,2.161,-0.148,,,,,,,
+decil,VII,Lo demás,405.000,66.987,-0.032,,,,,,,
+decil,VIII,Total,409.000,100.000,-1.852,-2.534,-0.622,-0.589,0.715,0.955,1.000,0.037
+decil,VIII,Bienes con IVA,409.000,23.794,-0.859,,,,,,,
+decil,VIII,Gasolinas,409.000,10.902,-0.780,,,,,,,
+decil,VIII,Electricidad,409.000,2.599,-0.177,,,,,,,
+decil,VIII,Lo demás,409.000,62.705,-0.036,,,,,,,
+decil,IX,Total,341.000,100.000,-1.839,-2.400,-0.628,-0.526,0.661,0.987,1.000,0.037
+decil,IX,Bienes con IVA,341.000,22.617,-0.840,,,,,,,
+decil,IX,Gasolinas,341.000,11.454,-0.821,,,,,,,
+decil,IX,Electricidad,341.000,2.227,-0.152,,,,,,,
+decil,IX,Lo demás,341.000,63.702,-0.026,,,,,,,
+decil,X,Total,356.000,100.000,-1.726,-2.263,-0.516,-0.486,0.647,1.028,1.000,0.037
+decil,X,Bienes con IVA,356.000,22.514,-0.836,,,,,,,
+decil,X,Gasolinas,356.000,12.513,-0.845,,,,,,,
+decil,X,Electricidad,356.000,1.773,-0.121,,,,,,,
+decil,X,Lo demás,356.000,63.200,0.075,,,,,,,
+tramo,todos,Total,3322.000,100.000,-1.691,-2.313,-0.566,-0.539,0.711,0.775,1.000,0.037
+tramo,todos,Bienes con IVA,3322.000,22.397,-0.835,,,,,,,
+tramo,todos,Gasolinas,3322.000,10.348,-0.727,,,,,,,
+tramo,todos,Electricidad,3322.000,2.246,-0.153,,,,,,,
+tramo,todos,Lo demás,3322.000,65.010,0.025,,,,,,,
+diferencia,Decil X menos decil I,Total,,0.000,-0.463,-0.103,-0.727,-0.596,0.425,0.924,3.000,0.148
+diferencia,Decil X menos decil I,Bienes con IVA,,-1.686,0.030,,,,,,,
+diferencia,Decil X menos decil I,Gasolinas,,7.073,-0.498,,,,,,,
+diferencia,Decil X menos decil I,Electricidad,,-0.248,0.017,,,,,,,
+diferencia,Decil X menos decil I,Lo demás,,-5.140,-0.012,,,,,,,
+diferencia,Quintil V menos quintil I,Total,,0.000,-0.521,-0.266,-0.607,-0.384,0.417,0.631,2.000,0.111
+diferencia,Quintil V menos quintil I,Bienes con IVA,,0.038,-0.040,,,,,,,
+diferencia,Quintil V menos quintil I,Gasolinas,,7.290,-0.499,,,,,,,
+diferencia,Quintil V menos quintil I,Electricidad,,-1.300,0.089,,,,,,,
+diferencia,Quintil V menos quintil I,Lo demás,,-6.027,-0.071,,,,,,,
+diferencia,Deciles VIII a X menos I a III,Total,,0.000,-0.487,-0.297,-0.552,-0.364,0.373,0.498,2.000,0.111
+diferencia,Deciles VIII a X menos I a III,Bienes con IVA,,0.347,-0.030,,,,,,,
+diferencia,Deciles VIII a X menos I a III,Gasolinas,,6.405,-0.434,,,,,,,
+diferencia,Deciles VIII a X menos I a III,Electricidad,,-0.678,0.047,,,,,,,
+diferencia,Deciles VIII a X menos I a III,Lo demás,,-6.073,-0.070,,,,,,,

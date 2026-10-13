@@ -41,6 +41,12 @@ def canasta(ent, quintil):
     return c.set_index("rubro")["participacion"].reindex(RUBROS8)
 
 
+def opciones_frontera():
+    """Tipos de producto con trayectoria mensual, agrupados por si pagaban IVA."""
+    grupos = {"con IVA": "Con IVA: bajó de 16 a 8 %", "sin IVA": "Sin IVA: tasa 0 % o exento", "comparación": "Comparación"}
+    return {titulo: {k: k for k in D.FR_CON_MESES if D.FR_CLASE[k] == clase} for clase, titulo in grupos.items()}
+
+
 def tarjeta(etiqueta, valor, nota="", clase=""):
     return ui.div(ui.div(etiqueta, class_="tj-etiqueta"), ui.div(valor, class_=f"tj-valor {clase}"),
                   ui.div(nota, class_="tj-nota"), class_="tarjeta")
@@ -124,6 +130,37 @@ panel_entidad = ui.nav_panel(
         grafica("En el tiempo (inflación anual)", "ent_series"),
     ))
 
+panel_frontera = ui.nav_panel(
+    "Un experimento: la frontera",
+    ui.layout_sidebar(
+        ui.sidebar(
+            ui.input_select("fr_tipo", "Tipo de producto", opciones_frontera()),
+            ui.p(ui.tags.b("Qué pasó: "), "el 1 de enero de 2019, en 43 municipios de la frontera norte el IVA bajó de 16 a "
+                 "8 %, el ISR de las empresas se redujo un tercio y el salario mínimo se duplicó. Baja California entera "
+                 "quedó dentro.", class_="ayuda"),
+            ui.p(ui.tags.b("Cómo se mide: "), "los precios de Baja California contra los de las 26 entidades que no tocan "
+                 "la frontera, antes y después. Si todo el recorte llegara al consumidor, un precio con IVA bajaría "
+                 f"{-D.FR_TRASLADO:.1f} %.", class_="ayuda"),
+            ui.p(ui.tags.b("Qué tan seguro: "), "solo hay una entidad tratada completa. La prueba es repetir la cuenta con "
+                 "cada una de las otras 26, donde no hubo política, y ver si alguna se mueve tanto como Baja California.",
+                 class_="ayuda"),
+            ui.p("Es el efecto del paquete entero, no solo del IVA.", class_="ayuda"),
+            width=320),
+        ui.output_ui("fr_tarjetas"),
+        ui.card(ui.card_header(ui.output_text("fr_titulo")), ui.output_ui("fr_eventos"),
+                ui.p("Diferencia de precios contra el promedio de las 26 entidades no fronterizas; diciembre de 2018 es el punto "
+                     "de partida. Cada línea gris es una de esas 26 comparada con las otras 25: lo que se mueve la cuenta "
+                     "donde no hubo política.", class_="nota-grafica")),
+        ui.layout_columns(
+            grafica("Un año después, por tipo de producto", "fr_tipos",
+                    "Julio a diciembre de 2019 contra los mismos meses de 2018, para que la temporada no cuente (la tarifa de "
+                    "luz cambia en verano). La barra con borde es el tipo elegido."),
+            ui.card(ui.card_header(ui.output_text("fr_titulo_estados")), ui.output_ui("fr_estados"), ui.output_ui("fr_nota_estados")),
+            col_widths=(7, 5)),
+        ui.card(ui.card_header("Cuánto bajó el costo de la canasta de los hogares de Baja California"),
+                ui.output_ui("fr_incidencia"), ui.output_ui("fr_nota_incidencia")),
+    ))
+
 panel_tu = ui.nav_panel(
     "Tu inflación",
     ui.layout_sidebar(
@@ -180,6 +217,38 @@ La diferencia de inflación entre dos grupos se parte de forma exacta en dos:
 - **Canasta:** compran productos distintos, y unos suben más que otros.
 - **Lugar:** el mismo producto sube distinto en las entidades donde vive cada grupo.
 
+### Un experimento: la frontera norte
+
+Lo anterior describe. La pestaña de la frontera busca un efecto: el 1 de enero de 2019 entró en vigor el
+Decreto de estímulos fiscales región fronteriza norte (Diario Oficial de la Federación, 31 de diciembre de
+2018) en 43 municipios de seis estados. El IVA bajó de 16 a 8 % y el ISR de las empresas de la zona, un
+tercio; el mismo día su salario mínimo se duplicó. Baja California entera está en la zona, y con ella las
+dos ciudades donde el INPC levanta sus precios (Tijuana y Mexicali).
+
+- **Comparación:** los precios de Baja California contra los de las 26 entidades que no tocan la frontera,
+  producto por producto, de julio de 2018 a diciembre de 2019 (diferencias en diferencias). Un recorte que
+  llega completo al consumidor baja el precio 6.9 % (1.08 / 1.16).
+- **Con IVA y sin IVA:** los 292 genéricos se clasificaron con la Ley del IVA. Los alimentos y las medicinas
+  pagan tasa 0 %, y las rentas, las colegiaturas y el transporte público están exentos: ahí no debía pasar
+  nada, y sirven de segunda comparación (triple diferencia).
+- **Placebos:** con una sola entidad tratada no hay un error estándar confiable. La prueba es repetir la
+  cuenta con cada una de las 26 entidades de comparación como si fuera la tratada; el valor p más chico
+  posible es 1 entre 27 (0.04).
+- **Dosis:** en Tamaulipas, Chihuahua y Coahuila solo una de las ciudades del INPC está en la zona, y en
+  Sonora y Nuevo León ninguna. Lo que pesa la ciudad tratada en el índice del estado se mide con la
+  electricidad, cuya tarifa regulada pasa el recorte íntegro.
+- **Hogares:** la canasta de cada decil de Baja California (ENIGH 2018) se valúa con sus precios y con los
+  de cada entidad de comparación.
+- **Límites:** es el efecto del paquete entero (IVA, ISR, salario mínimo y estímulo a la gasolina), medido
+  solo en precios y solo en 2019; seis meses previos es poco para descartar tendencias distintas; la
+  telefonía, los seguros y las computadoras tienen un precio nacional en el INPC y no pueden mostrar nada.
+  Después de 2019 la diferencia en las mercancías se redujo; en 2020 coincidieron la depreciación del peso
+  y las restricciones al cruce de la frontera, y con estos datos no se puede saber cuánto del traslado fue
+  duradero.
+
+El efecto promedio de este paquete sobre la inflación ya fue estudiado, entre otros, por Campos-Vázquez y
+Esquivel (2020, *Economics Letters*) y por Calderón, Cortés, Pérez Pérez y Salcedo (2023, *Labour Economics*).
+
 ### Advertencias
 
 - Dentro de una misma entidad y producto, todos los hogares enfrentan el mismo índice: las diferencias de
@@ -198,7 +267,7 @@ Cálculos propios con datos de INEGI.
 panel_metodo = ui.nav_panel("Método", ui.div(ui.markdown(METODO), class_="metodo"))
 
 app_ui = ui.page_navbar(
-    panel_ingreso, panel_porque, panel_entidad, panel_tu, panel_metodo,
+    panel_ingreso, panel_porque, panel_entidad, panel_frontera, panel_tu, panel_metodo,
     title="¿De quién es la inflación?",
     id="pestana",
     header=ui.head_content(ui.tags.script(src="plotly.min.js"), ui.include_css(AQUI / "www" / "estilos.css")),
@@ -353,6 +422,101 @@ def server(input, output, session):
     def ent_series():
         x = ent()
         return ui.HTML(F.html(F.series_entidades(x["anual"], input.ent_sel(), x["sufijo"], x["divergente"])))
+
+    # ------------------------------------------------------------ un experimento: la frontera
+    @reactive.calc
+    def fr():
+        k = input.fr_tipo()
+        return {"canasta": k, "clase": D.FR_CLASE[k], "medidas": D.fr_resumen[D.fr_resumen["canasta"] == k].set_index("medida")}
+
+    @render.ui
+    def fr_tarjetas():
+        x = fr()
+        m = x["medidas"]
+        uno = m.loc[D.FR_PRINCIPAL]
+        if x["clase"] == "sin IVA":
+            tercera = tarjeta("IVA de estos productos", "Sin cambio", "tasa 0 % o exentos: aquí no debía pasar nada")
+        elif pd.isna(uno["traslado"]):
+            tercera = tarjeta("Recorte completo del IVA", pct(D.FR_TRASLADO, True),
+                              "aquí se suma el estímulo al IEPS de la franja" if x["canasta"] == "Gasolinas"
+                              else "lo que bajaría un precio con IVA")
+        else:
+            tercera = tarjeta("Llegó al precio", f"{100 * uno['traslado']:.0f} %",
+                              f"del recorte del IVA, que completo sería {D.FR_TRASLADO:.1f} %")
+        lugar = int(uno["rango"])
+        distinto = "ninguna de las 26 sin la política bajó tanto" if lugar == 1 else \
+            "ninguna de las 26 sin la política subió tanto" if lugar == 27 else "no se distingue de las 26 sin la política"
+        return ui.div(tarjeta("Un año después", pct(uno["efecto"], True), "jul-dic de 2019 contra jul-dic de 2018", "guinda"),
+                      tarjeta("A los tres meses", pct(m.loc["mar-2019", "efecto"], True), "marzo de 2019 contra diciembre de 2018"),
+                      tercera,
+                      tarjeta("Lugar entre 27 entidades", f"{lugar}", f"{distinto} (p = {uno['valor_p']:.2f})"), class_="tarjetas")
+
+    @render.text
+    def fr_titulo():
+        return f"{fr()['canasta']}: Baja California contra las entidades que no tocan la frontera"
+
+    @render.ui
+    def fr_eventos():
+        x = fr()
+        a = D.fr_ancha(x["canasta"])
+        a = a[[c for c in a.columns if c == D.FR_TRATADA or c not in D.FR_FRONTERIZAS]]
+        con_referencia = x["clase"] == "con IVA" or x["clase"] == "comparación"
+        return ui.HTML(F.html(F.frontera_eventos(a, D.FR_TRATADA, D.FR_INICIO, D.FR_TRASLADO if con_referencia else None)))
+
+    @render.ui
+    def fr_tipos():
+        r = D.fr_resumen[(D.fr_resumen["medida"] == D.FR_PRINCIPAL) & (D.fr_resumen["clase"] != "comparación")]
+        return ui.HTML(F.html(F.frontera_tipos(r, fr()["canasta"], D.FR_TRASLADO)))
+
+    @reactive.calc
+    def fr_frontera():
+        efecto = D.fr_efectos(fr()["canasta"])
+        e = D.fr_estados.assign(efecto=lambda d: d["cve_ent"].map(efecto))
+        e["esperado"] = e["dosis"] * efecto[D.FR_TRATADA]
+        placebos = efecto.drop(D.FR_FRONTERIZAS)
+        return e, (float(placebos.quantile(0.05)), float(placebos.quantile(0.95)))
+
+    @render.text
+    def fr_titulo_estados():
+        return f"{fr()['canasta']}: los seis estados de la frontera"
+
+    @render.ui
+    def fr_estados():
+        return ui.HTML(F.html(F.frontera_estados(*fr_frontera())))
+
+    @render.ui
+    def fr_nota_estados():
+        e, _ = fr_frontera()
+        parciales = e[e["papel"] == "parcial"]
+        return ui.p("Ciudades donde el INPC levanta precios en cada estado y cuántas están en la zona del decreto. La marca "
+                    "negra es el efecto de Baja California por el peso de la ciudad tratada en el índice del estado ("
+                    + ", ".join(f"{r.entidad} {r.dosis:.2f}" for r in parciales.itertuples())
+                    + "), medido con la electricidad, cuya tarifa es regulada y pasa el recorte íntegro.", class_="nota-grafica")
+
+    @reactive.calc
+    def fr_deciles():
+        d = D.fr_incidencia[D.fr_incidencia["corte"] == "decil"]
+        partes = d[d["tipo"] != "Total"]
+        orden = list(dict.fromkeys(d["nivel"]))
+        ancho = lambda columna: partes.pivot(index="nivel", columns="tipo", values=columna).loc[orden, D.FR_TIPOS]
+        return ancho("efecto"), d[d["tipo"] == "Total"].set_index("nivel").loc[orden], ancho("participacion")
+
+    @render.ui
+    def fr_incidencia():
+        return ui.HTML(F.html(F.frontera_incidencia(*fr_deciles())))
+
+    @render.ui
+    def fr_nota_incidencia():
+        _, total, _ = fr_deciles()
+        t = D.fr_incidencia[D.fr_incidencia["tipo"] == "Total"].set_index("nivel")
+        dif = t.loc["Decil X menos decil I"]
+        return ui.p(f"Julio a diciembre de 2019 contra los mismos meses de 2018. Canasta de la ENIGH 2018 de los hogares de Baja "
+                    f"California en cada decil nacional de ingreso (de {total['hogares_muestra'].min():.0f} a "
+                    f"{total['hogares_muestra'].max():.0f} hogares en la muestra), valuada con sus precios y con los de cada "
+                    f"entidad sin la política. Todos los hogares juntos: {t.loc['todos', 'efecto']:+.1f} %. La diferencia entre "
+                    f"el decil X y el I ({dif['efecto']:+.1f} puntos) viene de la gasolina y no se distingue de lo que pasa en "
+                    f"las entidades sin la política (p = {dif['valor_p']:.2f}). No cuenta lo que el salario mínimo hizo con los "
+                    "ingresos.", class_="nota-grafica")
 
     # ------------------------------------------------------------ tu inflación
     @reactive.effect

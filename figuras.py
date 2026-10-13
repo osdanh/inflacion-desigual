@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-from datos import GEO, LUGAR, NOMBRE, ORDEN_GRUPOS, PAIS, ROMANOS, mes
+from datos import GEO, LUGAR, MESES, NOMBRE, ORDEN_GRUPOS, PAIS, ROMANOS, mes
 
 # --- colores: el color sigue al papel que cumple en la gráfica
 GUINDA, AZUL = "#8E1F38", "#1F6FA8"            # decil I / sube más;  decil X / sube menos
@@ -279,3 +279,149 @@ def aportes_rubro(aportes):
     fig.update_xaxes(visible=False, range=rango_con_etiquetas(a, 0.12))
     fig.update_yaxes(showgrid=False, tickfont=dict(color=TINTA, size=12.5), ticks="")
     return fig
+
+
+# ------------------------------------------------------------------ un experimento: la frontera
+# El guinda es Baja California, la tratada. Los placebos (las entidades donde no pasó nada) van en gris.
+FRANJA = "#E3E5E8"                                                    # donde caen nueve de cada diez placebos
+NOMBRE_FRANJA = "Nueve de cada diez entidades sin la política"
+COLOR_CLASE = {"con IVA": GUINDA, "sin IVA": AZUL, "todo": TINTA}     # el producto pagaba IVA o no
+NOMBRE_CLASE = {"con IVA": "Con IVA: bajó de 16 a 8 %", "sin IVA": "Sin IVA: tasa 0 % o exento", "todo": "Todos los productos"}
+COLOR_PAPEL = {"tratada": GUINDA, "parcial": "#C1504C", "fronteriza sin ciudad en la zona": TENUE}    # de más a menos dosis
+NOMBRE_PAPEL = {"tratada": "Todas sus ciudades en la zona", "parcial": "Una ciudad en la zona",
+                "fronteriza sin ciudad en la zona": "Ninguna ciudad en la zona"}
+COLOR_TIPO = {"Bienes con IVA": "#0072B2", "Gasolinas": "#56B4E9", "Electricidad": "#E69F00", "Lo demás": TENUE}
+
+
+def eje_meses(fig, fechas):
+    """Eje de una ventana de pocos meses: una marca por trimestre, con el mes en español."""
+    marcas = [f for f in fechas if f.month % 3 == 1]
+    fig.update_xaxes(tickmode="array", tickvals=marcas, hoverformat="%m/%Y",
+                     ticktext=[mes(f) if f.month == 1 or f == marcas[0] else MESES[f.month - 1] for f in marcas])
+    return fig
+
+
+def franja_en_leyenda(fig):
+    fig.add_scatter(x=[None], y=[None], mode="markers", marker=dict(symbol="square", size=13, color=FRANJA), name=NOMBRE_FRANJA)
+    return fig
+
+
+def frontera_eventos(ancho, tratada, inicio, traslado=None):
+    """ancho: meses x entidades, diferencia de precios en %. La tratada resaltada; cada una de las demás, en gris,
+    es un placebo. `traslado` dibuja la referencia del recorte completo del IVA."""
+    otras = [k for k in ancho.columns if k != tratada]
+    fig = go.Figure()
+    for k in otras:
+        fig.add_scatter(x=ancho.index, y=ancho[k], mode="lines", line=dict(color=GRIS_SERIE, width=0.9),
+                        showlegend=False, hoverinfo="skip")
+    fig.add_scatter(x=[None], y=[None], mode="lines", line=dict(color=GRIS_SERIE, width=1.2), name="Cada entidad sin la política")
+    extremos = np.column_stack([ancho[otras].min(axis=1), ancho[otras].max(axis=1)])
+    fig.add_scatter(x=ancho.index, y=ancho[tratada], mode="lines+markers", line=dict(color=GUINDA, width=2.4),
+                    marker=dict(size=7, color=GUINDA, line=dict(color="white", width=1.5)), name=NOMBRE[tratada], customdata=extremos,
+                    hovertemplate="<b>%{y:+.1f} %</b><br>Las demás: de %{customdata[0]:+.1f} a %{customdata[1]:+.1f} %<extra></extra>")
+    base(fig, 410, derecha=24)
+    eje_meses(fig, ancho.index).update_layout(hovermode="x unified")
+    bajo = min(float(ancho.min().min()), traslado or 0.0)
+    alto = max(float(ancho.max().max()), 0.0)
+    fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.08 * (alto - bajo), alto + 0.12 * (alto - bajo)])
+    linea_cero(fig)
+    vispera = f"{inicio - pd.Timedelta(days=15):%Y-%m-%d}"            # entre el último mes previo y el primero con el decreto
+    fig.add_shape(type="line", xref="x", yref="paper", x0=vispera, x1=vispera, y0=0, y1=1, line=dict(color=TENUE, width=1, dash="dot"))
+    fig.add_annotation(x=vispera, y=1, yref="paper", yanchor="top", xanchor="left", xshift=6, showarrow=False,
+                       text=f"Enero de {inicio.year}: IVA de 16 a 8 %", font=dict(size=12, color=TINTA2))
+    if traslado is not None:
+        fig.add_hline(traslado, line_color=TENUE, line_width=1, line_dash="dot")
+        fig.add_annotation(x=ancho.index[0], y=traslado, yshift=10, xanchor="left", showarrow=False, bgcolor="white", borderpad=1,
+                           text=f"Recorte completo: {traslado:.1f} %", font=dict(size=12, color=TINTA2))
+    ultimo = float(ancho[tratada].iloc[-1])                           # la etiqueta va del lado libre del último punto
+    fig.add_annotation(x=ancho.index[-1], y=ultimo, xanchor="right", xshift=6, showarrow=False, bgcolor="white", borderpad=1,
+                       yanchor="top" if ultimo < 0 else "bottom", yshift=-9 if ultimo < 0 else 9,
+                       text=f"<b>{NOMBRE[tratada]}</b> {ultimo:+.1f} %", font=dict(color=GUINDA, size=12.5))
+    return fig
+
+
+def frontera_tipos(resumen, seleccion, traslado):
+    """Efecto un año después por tipo de producto (resumen: uno por renglón, con clase, efecto y placebos). La barra
+    es Baja California y la franja gris, donde cae el 90 % de los placebos; el tipo elegido lleva borde."""
+    r = resumen.iloc[::-1]                                            # el primero queda arriba
+    fig = go.Figure()
+    fig.add_bar(x=r["placebo_p95"] - r["placebo_p05"], base=r["placebo_p05"], y=r["canasta"], orientation="h", width=0.7,
+                marker=dict(color=FRANJA, cornerradius=3), name=NOMBRE_FRANJA, hoverinfo="skip")
+    for clase, color in COLOR_CLASE.items():
+        d = r[r["clase"] == clase]
+        fig.add_bar(
+            x=d["efecto"], y=d["canasta"], orientation="h", width=0.36, name=NOMBRE_CLASE[clase],
+            marker=dict(color=color, cornerradius=3, line=dict(color=TINTA, width=[1.8 if k == seleccion else 0 for k in d["canasta"]])),
+            text=[f"{v:+.1f}" for v in d["efecto"]], textposition="outside", textfont=dict(color=TINTA, size=12), cliponaxis=False,
+            customdata=np.column_stack([d["placebo_min"], d["placebo_max"], d["rango"], d["valor_p"]]),
+            hovertemplate=("<b>%{y}</b><br>Baja California: %{x:+.1f} %<br>Las 26 sin la política: de %{customdata[0]:+.1f} a "
+                           "%{customdata[1]:+.1f} %<br>Lugar %{customdata[2]:.0f} de 27 (p = %{customdata[3]:.2f})<extra></extra>"))
+    base(fig, 29 * len(r) + 84, derecha=20)
+    fig.update_layout(barmode="overlay", legend=dict(traceorder="normal"))
+    extremos = pd.concat([r["efecto"], r["placebo_p05"], r["placebo_p95"], pd.Series([traslado])])
+    fig.update_xaxes(ticksuffix=" %", showgrid=True, gridcolor=REJILLA, showline=False, ticks="",
+                     range=rango_con_etiquetas(extremos, 0.08))
+    fig.update_yaxes(showgrid=False, tickfont=dict(color=TINTA, size=12.5), tickmode="array", tickvals=list(r["canasta"]),
+                     ticktext=[f"<b>{k}</b>" if k == seleccion else k for k in r["canasta"]],
+                     categoryorder="array", categoryarray=list(r["canasta"]), range=[-1.5, len(r) - 0.4])
+    linea_cero(fig, horizontal=False)
+    fig.add_vline(traslado, line_color=TENUE, line_width=1, line_dash="dot")
+    fig.add_annotation(x=traslado, y=0, yref="paper", yanchor="bottom", xanchor="left", xshift=5, showarrow=False,
+                       text=f"Recorte completo: {traslado:.1f} %", font=dict(size=11.5, color=TINTA2))     # en el renglón libre de abajo
+    return fig
+
+
+def frontera_estados(estados, franja):
+    """Los estados fronterizos, de más a menos ciudades del INPC dentro de la zona. estados: entidad, papel, ciudades,
+    en_la_zona, efecto y esperado (el efecto de la tratada por su dosis); franja: (p05, p95) de los placebos."""
+    e = estados.iloc[::-1].reset_index(drop=True)
+    e["etiqueta"] = (e["entidad"] + "<br>" + e["en_la_zona"].astype(str) + " de " + e["ciudades"].astype(str)
+                     + np.where(e["ciudades"] == 1, " ciudad", " ciudades"))
+    fig = go.Figure()
+    for papel, color in COLOR_PAPEL.items():
+        d = e[e["papel"] == papel]
+        fig.add_bar(
+            x=d["efecto"], y=d["etiqueta"], orientation="h", width=0.46, name=NOMBRE_PAPEL[papel], marker=dict(color=color, cornerradius=3),
+            customdata=np.column_stack([d["entidad"], d["ciudades_inpc"], d["ciudades_en_la_zona"].replace("", "ninguna")]),
+            hovertemplate=("<b>%{customdata[0]}</b>: %{x:+.1f} %<br>Ciudades del INPC: %{customdata[1]}<br>"
+                           "Dentro de la zona: %{customdata[2]}<extra></extra>"))
+    fig.add_scatter(x=e["esperado"], y=e["etiqueta"], mode="markers", name="Lo esperado por su parte dentro de la zona",
+                    marker=dict(symbol="line-ns", size=17, line=dict(color=TINTA, width=2)),
+                    hovertemplate="Esperado: %{x:+.1f} %<extra></extra>")
+    franja_en_leyenda(fig)
+    for r in e.itertuples():          # el valor va en una columna a la derecha: junto a la barra tropezaría con la marca
+        fig.add_annotation(x=1, xref="paper", y=r.etiqueta, xanchor="left", xshift=8, showarrow=False,
+                           text=f"<b>{r.efecto:+.1f} %</b>", font=dict(color=TINTA, size=12.5))
+    base(fig, 56 * len(e) + 96, derecha=62)
+    fig.update_layout(legend=dict(traceorder="normal"))
+    fig.add_vrect(x0=franja[0], x1=franja[1], fillcolor=FRANJA, line_width=0, layer="below")
+    extremos = pd.concat([e["efecto"], e["esperado"], pd.Series(franja)])
+    fig.update_xaxes(ticksuffix=" %", showgrid=True, gridcolor=REJILLA, showline=False, ticks="",
+                     range=rango_con_etiquetas(extremos, 0.06))
+    fig.update_yaxes(showgrid=False, tickfont=dict(color=TINTA, size=12.5), categoryorder="array", categoryarray=list(e["etiqueta"]))
+    return linea_cero(fig, horizontal=False)
+
+
+def frontera_incidencia(aportes, total, participacion):
+    """Efecto en el costo de la canasta por decil. aportes y participacion: deciles x tipos (puntos porcentuales y
+    % del gasto); total: por decil, con efecto, placebos y hogares en la muestra."""
+    fig = go.Figure()
+    for t in aportes.columns:
+        fig.add_bar(x=aportes.index, y=aportes[t], name=t, marker=dict(color=COLOR_TIPO[t], line=dict(color="white", width=1.5)),
+                    customdata=participacion[t], hovertemplate="%{y:+.2f} pp (%{customdata:.0f} % de su gasto)")
+    franja_en_leyenda(fig)
+    piso = aportes.clip(upper=0).sum(axis=1)                          # donde termina la barra hacia abajo
+    fig.add_scatter(x=aportes.index, y=piso, mode="text", text=[f"<b>{v:+.1f} %</b>" for v in total["efecto"]],
+                    textposition="bottom center", textfont=dict(color=TINTA, size=12.5), cliponaxis=False, name="Total",
+                    showlegend=False, customdata=np.column_stack([total["efecto"], total["placebo_min"], total["placebo_max"],
+                                                                  total["hogares_muestra"]]),
+                    hovertemplate=("<b>%{customdata[0]:+.2f} %</b><br>Entidades sin la política: de %{customdata[1]:+.2f} a "
+                                   "%{customdata[2]:+.2f} %<br>%{customdata[3]:.0f} hogares en la muestra"))
+    base(fig, 400)
+    fig.update_layout(barmode="relative", bargap=0.42, hovermode="x unified", legend=dict(traceorder="normal"))
+    franja = [float(total["placebo_p05"].min()), float(total["placebo_p95"].max())]
+    fig.add_hrect(y0=franja[0], y1=franja[1], fillcolor=FRANJA, line_width=0, layer="below")
+    bajo, alto = float(piso.min()), max(franja[1], float(aportes.clip(lower=0).sum(axis=1).max()))
+    fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.16 * (alto - bajo), alto + 0.06 * (alto - bajo)])
+    fig.update_xaxes(type="category", title=dict(text="Decil de ingreso (I: el de menor ingreso)", font=dict(size=12.5, color=TINTA2)))
+    return linea_cero(fig)

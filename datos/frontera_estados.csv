@@ -1,0 +1,7 @@
+﻿cve_ent,entidad,papel,ciudades_inpc,ciudades_en_la_zona,ciudades,en_la_zona,dosis
+02,Baja California,tratada,Mexicali; Tijuana,Mexicali; Tijuana,2,2,1.000
+28,Tamaulipas,parcial,Tampico; Matamoros,Matamoros,2,1,0.388
+08,Chihuahua,parcial,Ciudad Juárez; Chihuahua; Ciudad Jiménez,Ciudad Juárez,3,1,0.375
+05,Coahuila,parcial,Torreón; Monclova; Ciudad Acuña; Saltillo,Ciudad Acuña,4,1,0.332
+26,Sonora,fronteriza sin ciudad en la zona,Hermosillo; Huatabampo; Esperanza,,3,0,0.000
+19,Nuevo León,fronteriza sin ciudad en la zona,Monterrey,,1,0,0.000
