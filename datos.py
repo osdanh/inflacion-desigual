@@ -165,6 +165,11 @@ MY_PRODUCTOS = list(my_productos.sort_values("ponderador", ascending=False)["gen
 MY_H = int(my_traslado["h"].max())
 MY_GENERICOS = int(my_traslado["genericos"].iat[0])
 MY_AJUSTE = float(my_historia["frutas_y_verduras"].corr(my_historia["predicho_por_mayoreo"]))
+# la sequía en los estados que surten a la Central de Abasto (construir_sequia.py)
+my_sequia = leer("mayoreo_sequia_lp.csv")
+my_vi = leer("mayoreo_sequia_vi.csv")
+my_sequia_anual = leer("mayoreo_sequia_anual.csv")
+MY_H_SEQUIA = 12                                   # más allá de un año la respuesta mes a mes no es estable
 
 
 def im_trayectoria(canasta):

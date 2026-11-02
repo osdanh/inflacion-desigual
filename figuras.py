@@ -559,9 +559,10 @@ VERDE = COLOR_GRUPO["Frutas, verduras y pecuarios"]
 VERDE_CLARO = "rgba(0, 158, 115, 0.16)"
 
 
-def mayoreo_traslado(curva, h, nombre, promedio=None):
+def mayoreo_traslado(curva, h, nombre, promedio=None, vi=None):
     """curva: por mes h, traslado b con su intervalo (bajo, alto), en % del salto al mayoreo. promedio: la curva
-    del promedio de los productos, como referencia gris cuando se elige uno. h: mes resaltado."""
+    del promedio de los productos, como referencia gris cuando se elige uno. h: mes resaltado. vi: traslado con la
+    sequía como instrumento (h, b_vi, ee_vi), en rombos con su intervalo de 95 %."""
     fig = go.Figure()
     x = list(curva.index)
     fig.add_scatter(x=x + x[::-1], y=list(curva["alto"]) + list(curva["bajo"])[::-1], fill="toself", fillcolor=VERDE_CLARO,
@@ -573,13 +574,41 @@ def mayoreo_traslado(curva, h, nombre, promedio=None):
                     marker=dict(size=[11 if k == h else 6 for k in x], color=VERDE, line=dict(color="white", width=1.5)),
                     customdata=curva[["bajo", "alto"]].to_numpy(),
                     hovertemplate="%{x} meses: <b>%{y:.0f} %</b> (de %{customdata[0]:.0f} a %{customdata[1]:.0f})<extra></extra>")
+    if vi is not None:
+        fig.add_scatter(x=vi["h"], y=100 * vi["b_vi"], mode="markers", name="Con la sequía como instrumento",
+                        marker=dict(symbol="diamond", size=9, color=TINTA, line=dict(color="white", width=1)),
+                        error_y=dict(type="data", array=196 * vi["ee_vi"], color=TINTA2, thickness=1.1, width=3),
+                        hovertemplate="Con la sequía como instrumento: %{y:.0f} %<extra></extra>")
     base(fig, 360)
     fig.update_layout(hovermode="x unified", legend=dict(traceorder="normal"))
     fig.update_xaxes(tickmode="array", tickvals=x, title=dict(text="Meses después del salto al mayoreo (0: el mismo mes)",
                                                                font=dict(size=12.5, color=TINTA2)))
     bajo = min(float(curva["bajo"].min()), 0.0)
     alto = max(float(curva["alto"].max()), float(promedio["b"].max()) if promedio is not None else 0.0)
+    if vi is not None:
+        bajo = min(bajo, float((100 * vi["b_vi"] - 196 * vi["ee_vi"]).min()))
+        alto = max(alto, float((100 * vi["b_vi"] + 196 * vi["ee_vi"]).max()))
     fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.06 * (alto - bajo), alto + 0.1 * (alto - bajo)])
+    return linea_cero(fig)
+
+
+def mayoreo_sequia(lp, h_max):
+    """Respuesta del precio al mayoreo y al consumidor cuando sube 1 punto la sequía (0 a 5) en los estados que
+    surten a la Central de Abasto, en %, con intervalo de 95 %."""
+    fig = go.Figure()
+    for serie, nombre, color, relleno in (("mayoreo", "Precio al mayoreo", TINTA2, "rgba(91, 97, 104, 0.14)"),
+                                          ("consumidor", "Precio al consumidor", VERDE, VERDE_CLARO)):
+        d = lp[(lp["serie"] == serie) & (lp["h"] <= h_max)].sort_values("h")
+        x = list(d["h"])
+        fig.add_scatter(x=x + x[::-1], y=list(d["b"] + 1.96 * d["ee"]) + list(d["b"] - 1.96 * d["ee"])[::-1], fill="toself",
+                        fillcolor=relleno, line=dict(width=0), hoverinfo="skip", showlegend=False)
+        fig.add_scatter(x=x, y=d["b"], mode="lines+markers", name=nombre, line=dict(color=color, width=2.4),
+                        marker=dict(size=6, color=color), hovertemplate=f"{nombre}: %{{y:+.1f}} %<extra></extra>")
+    base(fig, 360)
+    fig.update_layout(hovermode="x unified", legend=dict(traceorder="normal"))
+    fig.update_xaxes(tickmode="array", tickvals=list(range(h_max + 1)),
+                     title=dict(text="Meses después de que sube la sequía (0: el mismo mes)", font=dict(size=12.5, color=TINTA2)))
+    fig.update_yaxes(ticksuffix=" %")
     return linea_cero(fig)
 
 

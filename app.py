@@ -155,7 +155,8 @@ panel_mayoreo = ui.nav_panel(
                  "verduras.", class_="ayuda"),
             ui.p(ui.tags.b("Cómo: "), "proyecciones locales: el cambio del precio al consumidor varios meses después contra el "
                  "salto al mayoreo del mismo producto, quitando la temporada de cada producto y lo que mueve a todos a la vez "
-                 "(inflación general, tipo de cambio).", class_="ayuda"),
+                 "(inflación general, tipo de cambio). Como comprobación, la sequía de los estados de donde viene cada producto "
+                 "sirve de instrumento (Monitor de Sequía, Conagua).", class_="ayuda"),
             ui.p(ui.tags.b("Por qué importa: "), "las frutas y verduras pesan más en el gasto del decil I, y lo que más compra "
                  "(jitomate, cebolla, papa, chile) es lo que más rápido pasa del mayoreo a la tienda.", class_="ayuda"),
             width=320),
@@ -167,6 +168,8 @@ panel_mayoreo = ui.nav_panel(
             col_widths=(6, 6)),
         ui.card(ui.card_header("La brecha de inflación anual entre el decil I y el X, y lo que predice el mayoreo"),
                 ui.output_ui("my_historia"), ui.output_ui("my_nota_historia")),
+        ui.card(ui.card_header("¿Y la sequía? Qué pasa con los precios cuando aumenta en los estados que surten a la Central de Abasto"),
+                ui.output_ui("my_sequia"), ui.output_ui("my_nota_sequia")),
         ui.card(ui.card_header(ui.output_text("my_titulo_productos")), ui.output_ui("my_productos"),
                 ui.p("Cada punto es una fruta o verdura; su tamaño, su peso en el INPC. A la derecha, las que pesan más en el gasto "
                      "del decil I que en el del X; arriba, las que más trasladan del mayoreo al consumidor en el mes elegido. El "
@@ -352,9 +355,13 @@ consumidor, en cuántos meses y a qué decil.
 - **Historia:** con el traslado de cada producto (rezagos distribuidos de 0 a 2 meses), el cambio anual al mayoreo
   predice el cambio anual al consumidor; con las canastas de los deciles, eso da la parte de la brecha que viene
   de la Central de Abasto.
-- **Límites:** es el traslado de choques de mayoreo, no de su causa (clima o plagas); un instrumento con la sequía
-  de los estados productores requeriría bajar el Monitor de Sequía de la Conagua. El mayoreo es solo el de la
-  Ciudad de México, los pecuarios no están y el traslado de la historia se estima con los mismos datos.
+- **Sequía:** del Monitor de Sequía de México (Conagua, base de municipios, quincenal) sale un índice de 0 a 5 por
+  estado y mes. Cada producto se expone a la sequía de los estados de donde llegaba a la Central de Abasto en ese
+  mes del año entre 2012 y 2017 (un instrumento de participaciones fijas). Se usa de dos formas: la respuesta de
+  los precios a la sequía (forma reducida) y el traslado con la sequía como instrumento del salto al mayoreo.
+- **Límites:** la sequía es un instrumento débil (F de 9 a 12) y su efecto inmediato es bajar el precio, no subirlo;
+  el índice no pondera por superficie sembrada ni distingue el riego. El mayoreo es solo el de la Ciudad de
+  México, los pecuarios no están y el traslado de la historia se estima con los mismos datos.
 
 ### Un experimento: la frontera norte
 
@@ -808,8 +815,9 @@ def server(input, output, session):
     @render.ui
     def my_traslado():
         x = my()
-        promedio = None if x["producto"] == D.MY_PROMEDIO else x["promedio"]
-        return ui.HTML(F.html(F.mayoreo_traslado(x["curva"], x["h"], x["producto"], promedio)))
+        es_promedio = x["producto"] == D.MY_PROMEDIO
+        return ui.HTML(F.html(F.mayoreo_traslado(x["curva"], x["h"], x["producto"], None if es_promedio else x["promedio"],
+                                                 D.my_vi[D.my_vi["h"] <= 2] if es_promedio else None)))
 
     @render.ui
     def my_nota_traslado():
@@ -821,6 +829,13 @@ def server(input, output, session):
                  f"{100 * t.loc[D.MY_H, 'rezagos_distribuidos']:.0f} % (rezagos distribuidos).")
         if my()["producto"] != D.MY_PROMEDIO:
             texto += " Cada producto tiene su propia curva en la misma regresión; la línea punteada es el promedio."
+        else:
+            v = D.my_vi.set_index("h")
+            texto += (f" Los rombos (meses 0 a 2; después el intervalo es demasiado ancho) usan la sequía de los estados de "
+                      f"origen como instrumento (F de la primera etapa de "
+                      f"{v['F'].min():.0f} a {v['F'].max():.0f}): {100 * v.loc[0, 'b_vi']:.0f} % el mismo mes y "
+                      f"{100 * v.loc[1, 'b_vi']:.0f} % al siguiente, al menos lo mismo que sin instrumento; no es la tienda "
+                      "jalando al mayoreo.")
         return ui.p(texto, class_="nota-grafica")
 
     @render.text
@@ -855,6 +870,25 @@ def server(input, output, session):
                     f"producto (punteada). Correlación entre estas dos: {D.MY_AJUSTE:.2f}. La subida de 2024 y la caída de 2025 "
                     "vienen de la Central de Abasto; los saltos de la brecha en 2020 y en 2022 a 2023 vienen de otros productos. "
                     "El traslado se estima con los mismos datos.", class_="nota-grafica")
+
+    @render.ui
+    def my_sequia():
+        return ui.HTML(F.html(F.mayoreo_sequia(D.my_sequia, D.MY_H_SEQUIA)))
+
+    @render.ui
+    def my_nota_sequia():
+        s = D.my_sequia.set_index(["serie", "h"])["b"]
+        a = D.my_sequia_anual.set_index(["serie", "rezago"])
+        return ui.p("Respuesta a un punto más de sequía (índice de 0 a 5, promedio de los municipios) en los estados de donde "
+                    "suele venir cada producto, según el SNIIM de 2012 a 2017; entre mayo de 2023 y mayo de 2024 esa exposición "
+                    f"subió 1.6 puntos. En los dos primeros meses el mayoreo baja {abs(s[('mayoreo', 0)]):.0f} a "
+                    f"{abs(s[('mayoreo', 1)]):.0f} % y el consumidor {abs(s[('consumidor', 0)]):.0f} a "
+                    f"{abs(s[('consumidor', 1)]):.0f} %. Una explicación posible: con sequía se cosecha y se vende antes, y no "
+                    "hay lluvias que dañen lo sembrado. En cambios anuales, un año después el mayoreo sube "
+                    f"{a.loc[('mayoreo', 12), 'b']:.0f} % (quizá porque se siembra menos), pero mes a mes eso no es estable. "
+                    "La sequía no explica los saltos de precio como un choque inmediato; los de 2024 tendrían que venir de "
+                    "otra cosa (calor, lluvias, lo que se dejó de sembrar), que con estos datos no se puede separar.",
+                    class_="nota-grafica")
 
     @render.text
     def my_titulo_productos():
