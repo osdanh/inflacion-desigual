@@ -551,3 +551,85 @@ def impuestos_directo(directo):
                      title=dict(text="Puntos porcentuales", font=dict(size=12.5, color=TINTA2)))
     fig.update_yaxes(showgrid=False, tickfont=dict(color=TINTA, size=12.5), categoryorder="array", categoryarray=y)
     return linea_cero(fig, horizontal=False)
+
+
+# ------------------------------------------------------------------ del mayoreo a la canasta
+# Verde: frutas y verduras (como en «¿Por qué?»); guinda y azul: los deciles I y X, como en «Por ingreso».
+VERDE = COLOR_GRUPO["Frutas, verduras y pecuarios"]
+VERDE_CLARO = "rgba(0, 158, 115, 0.16)"
+
+
+def mayoreo_traslado(curva, h, nombre, promedio=None):
+    """curva: por mes h, traslado b con su intervalo (bajo, alto), en % del salto al mayoreo. promedio: la curva
+    del promedio de los productos, como referencia gris cuando se elige uno. h: mes resaltado."""
+    fig = go.Figure()
+    x = list(curva.index)
+    fig.add_scatter(x=x + x[::-1], y=list(curva["alto"]) + list(curva["bajo"])[::-1], fill="toself", fillcolor=VERDE_CLARO,
+                    line=dict(width=0), hoverinfo="skip", name="Intervalo de 95 %")
+    if promedio is not None:
+        fig.add_scatter(x=promedio.index, y=promedio["b"], mode="lines", line=dict(color=TENUE, width=1.6, dash="dot"),
+                        name="Promedio de las frutas y verduras", hovertemplate="Promedio: %{y:.0f} %<extra></extra>")
+    fig.add_scatter(x=x, y=curva["b"], mode="lines+markers", line=dict(color=VERDE, width=2.6), name=nombre,
+                    marker=dict(size=[11 if k == h else 6 for k in x], color=VERDE, line=dict(color="white", width=1.5)),
+                    customdata=curva[["bajo", "alto"]].to_numpy(),
+                    hovertemplate="%{x} meses: <b>%{y:.0f} %</b> (de %{customdata[0]:.0f} a %{customdata[1]:.0f})<extra></extra>")
+    base(fig, 360)
+    fig.update_layout(hovermode="x unified", legend=dict(traceorder="normal"))
+    fig.update_xaxes(tickmode="array", tickvals=x, title=dict(text="Meses después del salto al mayoreo (0: el mismo mes)",
+                                                               font=dict(size=12.5, color=TINTA2)))
+    bajo = min(float(curva["bajo"].min()), 0.0)
+    alto = max(float(curva["alto"].max()), float(promedio["b"].max()) if promedio is not None else 0.0)
+    fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.06 * (alto - bajo), alto + 0.1 * (alto - bajo)])
+    return linea_cero(fig)
+
+
+def mayoreo_deciles(d, columna, ee):
+    """Respuesta de la canasta de cada decil (I a X) a un salto de 10 % al mayoreo, en %, con intervalo de 95 %."""
+    color = [GUINDA if n == "I" else AZUL if n == "X" else GRIS_SERIE for n in d["decil"]]
+    fig = go.Figure()
+    fig.add_bar(x=d["decil"], y=d[columna], marker=dict(color=color, cornerradius=3), width=0.6,
+                error_y=dict(type="data", array=1.96 * d[ee], color=TINTA2, thickness=1.2, width=4),
+                customdata=d["participacion"],
+                hovertemplate="Decil %{x}: <b>%{y:.2f} %</b><br>Frutas y verduras: %{customdata:.1f} % de su gasto<extra></extra>")
+    fig.add_scatter(x=d["decil"], y=d[columna] + 1.96 * d[ee], mode="text", text=[f"<b>{v:.2f}</b>" for v in d[columna]],
+                    textposition="top center", textfont=dict(color=TINTA, size=12), cliponaxis=False, hoverinfo="skip")
+    base(fig, 360, leyenda=False)
+    fig.update_xaxes(type="category", title=dict(text="Decil de ingreso (I: el de menor ingreso)", font=dict(size=12.5, color=TINTA2)))
+    fig.update_yaxes(ticksuffix=" %", range=[0, float((d[columna] + 1.96 * d[ee]).max()) * 1.2])
+    return fig
+
+
+def mayoreo_historia(h):
+    """Brecha de inflación anual entre el decil I y el X: el total, lo que pusieron las frutas y verduras y lo que
+    predice el mayoreo (en puntos porcentuales)."""
+    fig = go.Figure()
+    series = [("brecha_total", "Brecha total, decil I menos X", dict(color=GRIS_SERIE, width=1.8)),
+              ("frutas_y_verduras", "Lo que pusieron las frutas y verduras", dict(color=VERDE, width=2.6)),
+              ("predicho_por_mayoreo", "Lo que predice el mayoreo", dict(color=TINTA, width=2, dash="dash"))]
+    for col, nombre, linea in series:
+        fig.add_scatter(x=h["fecha"], y=h[col], mode="lines", line=linea, name=nombre, hovertemplate="%{y:+.2f} pp")
+    base(fig, 380, derecha=24)
+    eje_tiempo(fig).update_layout(hovermode="x unified")
+    fig.update_yaxes(ticksuffix=" pp")
+    return linea_cero(fig)
+
+
+def mayoreo_productos(p, seleccion=None):
+    """Cada fruta o verdura: cuánto más pesa en la canasta del decil I que en la del X (eje x) y cuánto de un salto
+    al mayoreo llega al consumidor (eje y). El tamaño es su peso en el INPC."""
+    fig = go.Figure()
+    etiqueta = (p["dif"] >= 0.25) | (p["traslado"] >= 70) | (p["generico"] == seleccion)
+    borde = [dict(color=GUINDA, width=2.5) if g == seleccion else dict(color="white", width=1) for g in p["generico"]]
+    fig.add_scatter(x=p["dif"], y=p["traslado"], mode="markers+text", text=np.where(etiqueta, p["generico"], ""),
+                    textposition="top center", textfont=dict(size=11.5, color=TINTA2),
+                    marker=dict(size=8 + 40 * np.sqrt(p["ponderador"] / p["ponderador"].max()), color=VERDE, opacity=0.75,
+                                line=dict(color=[b["color"] for b in borde], width=[b["width"] for b in borde])),
+                    customdata=np.column_stack([p["generico"], p["peso_decil_I"], p["peso_decil_X"]]),
+                    hovertemplate=("<b>%{customdata[0]}</b><br>Decil I: %{customdata[1]:.2f} % del gasto; decil X: "
+                                   "%{customdata[2]:.2f} %<br>Llega al consumidor: %{y:.0f} %<extra></extra>"))
+    base(fig, 400, leyenda=False, derecha=24)
+    fig.update_xaxes(showgrid=True, gridcolor=REJILLA, ticksuffix=" pp", zeroline=False,
+                     title=dict(text="Cuánto más pesa en el gasto del decil I que en el del X", font=dict(size=12.5, color=TINTA2)))
+    fig.update_yaxes(ticksuffix=" %", title=dict(text="Del salto al mayoreo, llega al consumidor", font=dict(size=12.5, color=TINTA2)))
+    linea_cero(fig)
+    return linea_cero(fig, horizontal=False)

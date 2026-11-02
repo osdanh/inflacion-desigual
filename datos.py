@@ -152,10 +152,35 @@ im_directo = leer("impuestos_directo.csv")
 IM_COMPARACION = im_placebos["clave"].nunique()   # productos de comparación
 im_placebos_ancha = im_placebos.pivot(index="fecha", columns="clave", values="efecto")
 
+# --- del mayoreo a la canasta: frutas y verduras de la Central de Abasto (tablas de construir_mayoreo.py)
+MY_CHOQUE = 10.0                                   # salto al mayoreo que se reporta (%)
+MY_PROMEDIO = "Promedio de las frutas y verduras"
+my_traslado = leer("mayoreo_traslado.csv")
+my_traslado_prod = leer("mayoreo_traslado_productos.csv")
+my_deciles = leer("mayoreo_deciles.csv")
+my_brecha = leer("mayoreo_brecha_lp.csv")
+my_historia = leer("mayoreo_historia.csv", parse_dates=["fecha"])
+my_productos = leer("mayoreo_productos.csv")
+MY_PRODUCTOS = list(my_productos.sort_values("ponderador", ascending=False)["generico"])
+MY_H = int(my_traslado["h"].max())
+MY_GENERICOS = int(my_traslado["genericos"].iat[0])
+MY_AJUSTE = float(my_historia["frutas_y_verduras"].corr(my_historia["predicho_por_mayoreo"]))
+
 
 def im_trayectoria(canasta):
     """Efecto mensual de una canasta (%), julio de 2025 a septiembre de 2026; diciembre de 2025 = 0."""
     return im_eventos[im_eventos["canasta"] == canasta].set_index("fecha")["efecto"]
+
+
+def my_curva(producto):
+    """Traslado del mayoreo al consumidor por horizonte (h): efecto e intervalo de 95 %, en % del salto al mayoreo."""
+    if producto == MY_PROMEDIO:
+        d = my_traslado[["h", "b", "bajo", "alto"]].copy()
+    else:
+        d = my_traslado_prod[my_traslado_prod["generico"] == producto][["h", "b", "ee"]].copy()
+        d["bajo"], d["alto"] = d["b"] - 1.96 * d["ee"], d["b"] + 1.96 * d["ee"]
+    d[["b", "bajo", "alto"]] *= 100
+    return d.set_index("h")[["b", "bajo", "alto"]]
 
 
 def im_esperado(canasta):

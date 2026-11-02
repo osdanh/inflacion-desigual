@@ -52,6 +52,15 @@ def opciones_impuestos():
     return {grupo: {k: k for k in canastas} for grupo, canastas in D.IM_GRUPOS.items()}
 
 
+def opciones_mayoreo():
+    """El promedio de las frutas y verduras y cada producto, del que más pesa en el INPC al que menos."""
+    return {D.MY_PROMEDIO: D.MY_PROMEDIO, "Cada producto (del que más pesa al que menos)": {g: g for g in D.MY_PRODUCTOS}}
+
+
+def cuando(h):
+    return "el mismo mes" if h == 0 else "al mes siguiente" if h == 1 else f"a los {h} meses"
+
+
 def tarjeta(etiqueta, valor, nota="", clase=""):
     return ui.div(ui.div(etiqueta, class_="tj-etiqueta"), ui.div(valor, class_=f"tj-valor {clase}"),
                   ui.div(nota, class_="tj-nota"), class_="tarjeta")
@@ -109,7 +118,7 @@ panel_porque = ui.nav_panel(
     ))
 
 panel_impuestos = ui.nav_panel(
-    "Un experimento: refrescos y cigarros",
+    "Refrescos y cigarros",
     ui.layout_sidebar(
         ui.sidebar(
             ui.input_select("im_producto", "Producto", opciones_impuestos()),
@@ -133,6 +142,36 @@ panel_impuestos = ui.nav_panel(
             ui.card(ui.card_header("¿Y si se compara el índice de cada decil?"), ui.output_ui("im_directo"),
                     ui.output_ui("im_nota_directo")),
             col_widths=(6, 6)),
+    ))
+
+panel_mayoreo = ui.nav_panel(
+    "Del mayoreo a la canasta",
+    ui.layout_sidebar(
+        ui.sidebar(
+            ui.input_select("my_producto", "Producto", opciones_mayoreo()),
+            ui.input_slider("my_h", "Meses después del salto", min=0, max=D.MY_H, value=1, step=1, ticks=False),
+            ui.p(ui.tags.b("Qué se mide: "), "cuánto de un aumento del precio al mayoreo en la Central de Abasto de la Ciudad "
+                 f"de México (SNIIM) llega al precio que pagan los hogares (INPC), mes a mes, en {D.MY_GENERICOS} frutas y "
+                 "verduras.", class_="ayuda"),
+            ui.p(ui.tags.b("Cómo: "), "proyecciones locales: el cambio del precio al consumidor varios meses después contra el "
+                 "salto al mayoreo del mismo producto, quitando la temporada de cada producto y lo que mueve a todos a la vez "
+                 "(inflación general, tipo de cambio).", class_="ayuda"),
+            ui.p(ui.tags.b("Por qué importa: "), "las frutas y verduras pesan más en el gasto del decil I, y lo que más compra "
+                 "(jitomate, cebolla, papa, chile) es lo que más rápido pasa del mayoreo a la tienda.", class_="ayuda"),
+            width=320),
+        ui.output_ui("my_tarjetas"),
+        ui.layout_columns(
+            ui.card(ui.card_header(ui.output_text("my_titulo")), ui.output_ui("my_traslado"), ui.output_ui("my_nota_traslado")),
+            ui.card(ui.card_header(ui.output_text("my_titulo_deciles")), ui.output_ui("my_deciles"),
+                    ui.output_ui("my_nota_deciles")),
+            col_widths=(6, 6)),
+        ui.card(ui.card_header("La brecha de inflación anual entre el decil I y el X, y lo que predice el mayoreo"),
+                ui.output_ui("my_historia"), ui.output_ui("my_nota_historia")),
+        ui.card(ui.card_header(ui.output_text("my_titulo_productos")), ui.output_ui("my_productos"),
+                ui.p("Cada punto es una fruta o verdura; su tamaño, su peso en el INPC. A la derecha, las que pesan más en el gasto "
+                     "del decil I que en el del X; arriba, las que más trasladan del mayoreo al consumidor en el mes elegido. El "
+                     "jitomate y la cebolla están arriba a la derecha: por eso los saltos de la Central de Abasto pegan más al "
+                     "decil I.", class_="nota-grafica")),
     ))
 
 panel_entidad = ui.nav_panel(
@@ -232,6 +271,8 @@ efecto canasta y un efecto lugar.
 - **Mapa:** Marco Geoestadístico de INEGI (diciembre de 2025), simplificado.
 - **Impuestos:** decreto que reforma la Ley del IEPS (Diario Oficial de la Federación, 7 de noviembre de 2025) y
   acuerdo de la SHCP con las cuotas de 2026 (22 de diciembre de 2025).
+- **Mayoreo:** Sistema Nacional de Información e Integración de Mercados (SNIIM, Secretaría de Economía), precios
+  diarios de frutas y hortalizas en la Central de Abasto de la Ciudad de México, de 2012 a septiembre de 2026.
 
 ### Cómo se calcula
 
@@ -289,6 +330,32 @@ después se reparte con la canasta de cada decil.
 Con el impuesto de 2014 (un peso por litro), los precios de los refrescos subieron un poco más que el impuesto
 (Colchero y otros, 2015, *PLoS ONE*).
 
+### Del mayoreo a la canasta
+
+La brecha entre el decil I y el X sube y baja sobre todo con las frutas y verduras. Esta pestaña mide de dónde
+vienen esos saltos: cuánto de un aumento del precio al mayoreo en la Central de Abasto llega al precio al
+consumidor, en cuántos meses y a qué decil.
+
+- **Índices:** cada producto del SNIIM (producto, calidad, presentación y origen) se asigna a uno de 30 genéricos
+  de frutas y verduras del INPC (falta el frijol, que no está en esa sección del SNIIM). Su cambio mensual se
+  promedia dentro del genérico y se encadena. Al consumidor se usa el índice nacional de cada genérico. En el
+  archivo del SNIIM faltan junio de 2020 y enero de 2021.
+- **Proyecciones locales (Jordà, 2005):** para cada horizonte h de 0 a 12 meses, el cambio del precio al
+  consumidor de t − 1 a t + h se regresa contra el cambio al mayoreo en t, con tres rezagos de ambos, efectos
+  fijos de producto × mes del año (la temporada) y de mes (lo que mueve a todos a la vez: inflación general, tipo
+  de cambio, demanda). El coeficiente se identifica con los choques propios de cada producto, que en perecederos
+  vienen sobre todo de la oferta (clima, plagas, cosechas). Se pondera con el INPC y los errores son de Driscoll y
+  Kraay (1998), robustos a correlación entre productos y entre meses.
+- **Por decil:** un salto de 10 % al mayoreo de todas las frutas y verduras sube la canasta de cada decil en
+  10 × suma de (peso del producto en su gasto × su traslado). La comprobación directa es una proyección local de
+  la brecha entre los deciles I y X contra el índice de mayoreo (errores de Newey y West).
+- **Historia:** con el traslado de cada producto (rezagos distribuidos de 0 a 2 meses), el cambio anual al mayoreo
+  predice el cambio anual al consumidor; con las canastas de los deciles, eso da la parte de la brecha que viene
+  de la Central de Abasto.
+- **Límites:** es el traslado de choques de mayoreo, no de su causa (clima o plagas); un instrumento con la sequía
+  de los estados productores requeriría bajar el Monitor de Sequía de la Conagua. El mayoreo es solo el de la
+  Ciudad de México, los pecuarios no están y el traslado de la historia se estima con los mismos datos.
+
 ### Un experimento: la frontera norte
 
 La pestaña de la frontera mide otro efecto: el 1 de enero de 2019 entró en vigor el
@@ -339,7 +406,7 @@ Cálculos propios con datos de INEGI.
 panel_metodo = ui.nav_panel("Método", ui.div(ui.markdown(METODO), class_="metodo"))
 
 app_ui = ui.page_navbar(
-    panel_ingreso, panel_porque, panel_impuestos, panel_entidad, panel_frontera, panel_tu, panel_metodo,
+    panel_ingreso, panel_porque, panel_impuestos, panel_mayoreo, panel_entidad, panel_frontera, panel_tu, panel_metodo,
     title="¿De quién es la inflación?",
     id="pestana",
     header=ui.head_content(ui.tags.script(src="plotly.min.js"), ui.include_css(AQUI / "www" / "estilos.css")),
@@ -711,6 +778,95 @@ def server(input, output, session):
                     f"I contra el X da {d['directo']:+.2f} puntos, cuando el impuesto aporta {d['Pagaron más impuesto']:+.2f}; los "
                     "pecuarios bajaron más en la canasta del decil I y tapan parte del efecto. Por eso el efecto se mide producto "
                     "por producto y después se reparte con la canasta de cada decil.", class_="nota-grafica")
+
+    # ------------------------------------------------------------ del mayoreo a la canasta
+    @reactive.calc
+    def my():
+        k, h = input.my_producto(), int(input.my_h())
+        return {"producto": k, "h": h, "curva": D.my_curva(k), "promedio": D.my_curva(D.MY_PROMEDIO),
+                "deciles": D.my_deciles[D.my_deciles["h"] == h].set_index("decil").loc[D.ROMANOS[1:]].reset_index()}
+
+    @render.ui
+    def my_tarjetas():
+        x = my()
+        c, h = x["curva"], x["h"]
+        d = x["deciles"].set_index("decil")["respuesta_por_producto"]
+        sujeto = "en promedio" if x["producto"] == D.MY_PROMEDIO else x["producto"]
+        return ui.div(
+            tarjeta("El mismo mes", f"{c.loc[0, 'b']:.0f} %", f"del salto al mayoreo llega al consumidor ({sujeto})"),
+            tarjeta(cuando(h).capitalize(), f"{c.loc[h, 'b']:.0f} %", f"intervalo de {c.loc[h, 'bajo']:.0f} a {c.loc[h, 'alto']:.0f} %"),
+            tarjeta("Decil I contra decil X", f"{d['I'] / d['X']:.1f} veces",
+                    f"un salto de 10 % al mayoreo sube su canasta {d['I']:.2f} y {d['X']:.2f} % {cuando(h)}", "guinda"),
+            tarjeta("Lo que explica el mayoreo", f"{D.MY_AJUSTE:.2f}",
+                    "correlación con lo que las frutas y verduras pusieron en la brecha I menos X"),
+            class_="tarjetas")
+
+    @render.text
+    def my_titulo():
+        return f"{my()['producto']}: cuánto del salto al mayoreo llega al consumidor"
+
+    @render.ui
+    def my_traslado():
+        x = my()
+        promedio = None if x["producto"] == D.MY_PROMEDIO else x["promedio"]
+        return ui.HTML(F.html(F.mayoreo_traslado(x["curva"], x["h"], x["producto"], promedio)))
+
+    @render.ui
+    def my_nota_traslado():
+        t = D.my_traslado.set_index("h")
+        texto = (f"Proyecciones locales con {D.MY_GENERICOS} frutas y verduras, de noviembre de 2018 a septiembre de 2026, "
+                 "ponderadas con el INPC; el intervalo usa errores de Driscoll y Kraay. La curva baja después del primer mes "
+                 f"porque los saltos al mayoreo se revierten: a los seis meses el propio mayoreo conserva "
+                 f"{100 * t.loc[6, 'mayoreo_propio']:.0f} % del salto. Si se quedara arriba, al consumidor llegaría "
+                 f"{100 * t.loc[D.MY_H, 'rezagos_distribuidos']:.0f} % (rezagos distribuidos).")
+        if my()["producto"] != D.MY_PROMEDIO:
+            texto += " Cada producto tiene su propia curva en la misma regresión; la línea punteada es el promedio."
+        return ui.p(texto, class_="nota-grafica")
+
+    @render.text
+    def my_titulo_deciles():
+        return f"Un salto de 10 % al mayoreo de todas las frutas y verduras, {cuando(my()['h'])}"
+
+    @render.ui
+    def my_deciles():
+        return ui.HTML(F.html(F.mayoreo_deciles(my()["deciles"], "respuesta_por_producto", "ee_por_producto")))
+
+    @render.ui
+    def my_nota_deciles():
+        x = my()
+        d = x["deciles"].set_index("decil")
+        b = D.my_brecha[(D.my_brecha["serie"] == "Decil I menos decil X") & (D.my_brecha["h"] == x["h"])].iloc[0]
+        suma = d.loc["I", "respuesta_por_producto"] - d.loc["X", "respuesta_por_producto"]
+        return ui.p(f"Efecto en el costo de la canasta, con el traslado de cada producto y su peso en el gasto de cada decil "
+                    f"(ENIGH 2022 calibrada, a precios de septiembre de 2026): estas frutas y verduras son "
+                    f"{d.loc['I', 'participacion']:.1f} % del gasto del decil I y {d.loc['X', 'participacion']:.1f} % del X. "
+                    f"Comprobación directa: la brecha entre el decil I y el X sube {b['b']:.2f} puntos {cuando(x['h'])} de un "
+                    f"salto de 10 % en el índice de mayoreo (proyección local de la brecha; producto por producto da {suma:.2f}). "
+                    "La directa da más porque el índice de mayoreo se mueve junto con otros alimentos.", class_="nota-grafica")
+
+    @render.ui
+    def my_historia():
+        return ui.HTML(F.html(F.mayoreo_historia(D.my_historia)))
+
+    @render.ui
+    def my_nota_historia():
+        return ui.p("Diferencia entre la inflación anual del decil I y la del X (gris); la parte que pusieron estas frutas y "
+                    "verduras con sus precios al consumidor (verde), y la que predice el mayoreo con el traslado de cada "
+                    f"producto (punteada). Correlación entre estas dos: {D.MY_AJUSTE:.2f}. La subida de 2024 y la caída de 2025 "
+                    "vienen de la Central de Abasto; los saltos de la brecha en 2020 y en 2022 a 2023 vienen de otros productos. "
+                    "El traslado se estima con los mismos datos.", class_="nota-grafica")
+
+    @render.text
+    def my_titulo_productos():
+        return f"Lo que más compra el decil I es lo que más traslada ({cuando(my()['h'])})"
+
+    @render.ui
+    def my_productos():
+        x = my()
+        t = D.my_traslado_prod[D.my_traslado_prod["h"] == x["h"]].set_index("generico")["b"]
+        p = D.my_productos.assign(dif=lambda d: d["peso_decil_I"] - d["peso_decil_X"],
+                                  traslado=lambda d: 100 * d["generico"].map(t))
+        return ui.HTML(F.html(F.mayoreo_productos(p, x["producto"])))
 
     # ------------------------------------------------------------ tu inflación
     @reactive.effect
