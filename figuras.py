@@ -562,7 +562,7 @@ VERDE_CLARO = "rgba(0, 158, 115, 0.16)"
 def mayoreo_traslado(curva, h, nombre, promedio=None, vi=None):
     """curva: por mes h, traslado b con su intervalo (bajo, alto), en % del salto al mayoreo. promedio: la curva
     del promedio de los productos, como referencia gris cuando se elige uno. h: mes resaltado. vi: traslado con la
-    sequía como instrumento (h, b_vi, ee_vi), en rombos con su intervalo de 95 %."""
+    sequía como instrumento (h, b_vi, ar_bajo, ar_alto), en rombos con su conjunto de Anderson-Rubin de 95 %."""
     fig = go.Figure()
     x = list(curva.index)
     fig.add_scatter(x=x + x[::-1], y=list(curva["alto"]) + list(curva["bajo"])[::-1], fill="toself", fillcolor=VERDE_CLARO,
@@ -577,8 +577,11 @@ def mayoreo_traslado(curva, h, nombre, promedio=None, vi=None):
     if vi is not None:
         fig.add_scatter(x=vi["h"], y=100 * vi["b_vi"], mode="markers", name="Con la sequía como instrumento",
                         marker=dict(symbol="diamond", size=9, color=TINTA, line=dict(color="white", width=1)),
-                        error_y=dict(type="data", array=196 * vi["ee_vi"], color=TINTA2, thickness=1.1, width=3),
-                        hovertemplate="Con la sequía como instrumento: %{y:.0f} %<extra></extra>")
+                        error_y=dict(type="data", symmetric=False, array=100 * (vi["ar_alto"] - vi["b_vi"]),
+                                     arrayminus=100 * (vi["b_vi"] - vi["ar_bajo"]), color=TINTA2, thickness=1.1, width=3),
+                        customdata=100 * vi[["ar_bajo", "ar_alto"]].to_numpy(),
+                        hovertemplate=("Con la sequía como instrumento: %{y:.0f} % (Anderson-Rubin: de %{customdata[0]:.0f} "
+                                       "a %{customdata[1]:.0f})<extra></extra>"))
     base(fig, 360)
     fig.update_layout(hovermode="x unified", legend=dict(traceorder="normal"))
     fig.update_xaxes(tickmode="array", tickvals=x, title=dict(text="Meses después del salto al mayoreo (0: el mismo mes)",
@@ -586,8 +589,8 @@ def mayoreo_traslado(curva, h, nombre, promedio=None, vi=None):
     bajo = min(float(curva["bajo"].min()), 0.0)
     alto = max(float(curva["alto"].max()), float(promedio["b"].max()) if promedio is not None else 0.0)
     if vi is not None:
-        bajo = min(bajo, float((100 * vi["b_vi"] - 196 * vi["ee_vi"]).min()))
-        alto = max(alto, float((100 * vi["b_vi"] + 196 * vi["ee_vi"]).max()))
+        bajo = min(bajo, float(100 * vi["ar_bajo"].min()))
+        alto = max(alto, float(100 * vi["ar_alto"].max()))
     fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.06 * (alto - bajo), alto + 0.1 * (alto - bajo)])
     return linea_cero(fig)
 

@@ -344,11 +344,18 @@ consumidor, en cuántos meses y a qué decil.
   promedia dentro del genérico y se encadena. Al consumidor se usa el índice nacional de cada genérico. En el
   archivo del SNIIM faltan junio de 2020 y enero de 2021.
 - **Proyecciones locales (Jordà, 2005):** para cada horizonte h de 0 a 12 meses, el cambio del precio al
-  consumidor de t − 1 a t + h se regresa contra el cambio al mayoreo en t, con tres rezagos de ambos, efectos
+  consumidor de t − 1 a t + h se regresa contra el cambio al mayoreo en t, con doce rezagos de ambos, efectos
   fijos de producto × mes del año (la temporada) y de mes (lo que mueve a todos a la vez: inflación general, tipo
   de cambio, demanda). El coeficiente se identifica con los choques propios de cada producto, que en perecederos
   vienen sobre todo de la oferta (clima, plagas, cosechas). Se pondera con el INPC y los errores son de Driscoll y
-  Kraay (1998), robustos a correlación entre productos y entre meses.
+  Kraay (1998), robustos a correlación entre productos y entre meses. Los meses que faltan en el SNIIM se llenan
+  con la mitad del cambio de dos meses, solo en los rezagos.
+- **Rezagos y robustez:** doce rezagos porque Akaike, Hannan-Quinn y Schwarz los eligen en el VAR de panel del
+  mayoreo y el consumidor, y porque en datos mensuales conviene errar hacia más (Kilian y Lütkepohl, 2017). Con
+  3 o 6 rezagos, en niveles y con un VAR recursivo (el mayoreo primero), el traslado de los tres primeros meses
+  casi no cambia; después del sexto mes depende de la especificación. Proyecciones locales y VAR estiman lo mismo
+  en población (Plagborg-Møller y Wolf, 2021); con rezagos de control, los errores robustos a heterocedasticidad
+  bastan (Montiel Olea y Plagborg-Møller, 2021), y dan casi lo mismo que los de Driscoll y Kraay.
 - **Por decil:** un salto de 10 % al mayoreo de todas las frutas y verduras sube la canasta de cada decil en
   10 × suma de (peso del producto en su gasto × su traslado). La comprobación directa es una proyección local de
   la brecha entre los deciles I y X contra el índice de mayoreo (errores de Newey y West).
@@ -359,7 +366,8 @@ consumidor, en cuántos meses y a qué decil.
   estado y mes. Cada producto se expone a la sequía de los estados de donde llegaba a la Central de Abasto en ese
   mes del año entre 2012 y 2017 (un instrumento de participaciones fijas). Se usa de dos formas: la respuesta de
   los precios a la sequía (forma reducida) y el traslado con la sequía como instrumento del salto al mayoreo.
-- **Límites:** la sequía es un instrumento débil (F de 9 a 12) y su efecto inmediato es bajar el precio, no subirlo;
+- **Límites:** la sequía es un instrumento en el límite (F de 13 a 14; cerca de 30 sin 2020 y 2021), por eso se usan
+  conjuntos de Anderson-Rubin, y su efecto inmediato es bajar el precio, no subirlo;
   el índice no pondera por superficie sembrada ni distingue el riego. El mayoreo es solo el de la Ciudad de
   México, los pecuarios no están y el traslado de la historia se estima con los mismos datos.
 
@@ -816,26 +824,27 @@ def server(input, output, session):
     def my_traslado():
         x = my()
         es_promedio = x["producto"] == D.MY_PROMEDIO
-        return ui.HTML(F.html(F.mayoreo_traslado(x["curva"], x["h"], x["producto"], None if es_promedio else x["promedio"],
-                                                 D.my_vi[D.my_vi["h"] <= 2] if es_promedio else None)))
+        return ui.HTML(F.html(F.mayoreo_traslado(x["curva"], x["h"], x["producto"], None if es_promedio else x["promedio"])))
 
     @render.ui
     def my_nota_traslado():
         t = D.my_traslado.set_index("h")
-        texto = (f"Proyecciones locales con {D.MY_GENERICOS} frutas y verduras, de noviembre de 2018 a septiembre de 2026, "
-                 "ponderadas con el INPC; el intervalo usa errores de Driscoll y Kraay. La curva baja después del primer mes "
-                 f"porque los saltos al mayoreo se revierten: a los seis meses el propio mayoreo conserva "
-                 f"{100 * t.loc[6, 'mayoreo_propio']:.0f} % del salto. Si se quedara arriba, al consumidor llegaría "
-                 f"{100 * t.loc[D.MY_H, 'rezagos_distribuidos']:.0f} % (rezagos distribuidos).")
+        texto = (f"Proyecciones locales con {D.MY_GENERICOS} frutas y verduras y {D.MY_REZAGOS} rezagos, de "
+                 f"{D.mes(D.MY_DESDE, largo=True)} a {D.mes(D.FIN, largo=True)}, ponderadas con el INPC; el intervalo usa "
+                 "errores de Driscoll y Kraay. La curva baja después del primer mes porque los saltos al mayoreo se revierten: "
+                 f"a los seis meses el propio mayoreo conserva {100 * t.loc[6, 'mayoreo_propio']:.0f} % del salto. Si se "
+                 f"quedara arriba, al consumidor llegaría {100 * t.loc[D.MY_H, 'rezagos_distribuidos']:.0f} % (rezagos "
+                 "distribuidos).")
         if my()["producto"] != D.MY_PROMEDIO:
             texto += " Cada producto tiene su propia curva en la misma regresión; la línea punteada es el promedio."
         else:
-            v = D.my_vi.set_index("h")
-            texto += (f" Los rombos (meses 0 a 2; después el intervalo es demasiado ancho) usan la sequía de los estados de "
-                      f"origen como instrumento (F de la primera etapa de "
-                      f"{v['F'].min():.0f} a {v['F'].max():.0f}): {100 * v.loc[0, 'b_vi']:.0f} % el mismo mes y "
-                      f"{100 * v.loc[1, 'b_vi']:.0f} % al siguiente, al menos lo mismo que sin instrumento; no es la tienda "
-                      "jalando al mayoreo.")
+            v = D.my_ar[D.my_ar["especificacion"] == "principal"].set_index("h")
+            texto += (f" Comprobación: con la sequía de los estados de origen como instrumento (F de la primera etapa de "
+                      f"{v.loc[[0, 1, 2], 'F'].min():.0f} a {v.loc[[0, 1, 2], 'F'].max():.0f}; conjuntos de Anderson-Rubin, que "
+                      f"valen aunque el instrumento sea débil) llega {100 * v.loc[0, 'b_vi']:.0f} % el mismo mes (de "
+                      f"{100 * v.loc[0, 'ar_bajo']:.0f} a {100 * v.loc[0, 'ar_alto']:.0f}) y {100 * v.loc[1, 'b_vi']:.0f} % al "
+                      "siguiente: al menos lo mismo que sin instrumento, así que no es la tienda jalando al mayoreo. Con otras "
+                      "especificaciones (Método), los tres primeros meses casi no cambian; los horizontes largos sí.")
         return ui.p(texto, class_="nota-grafica")
 
     @render.text

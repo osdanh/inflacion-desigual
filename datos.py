@@ -170,6 +170,10 @@ my_sequia = leer("mayoreo_sequia_lp.csv")
 my_vi = leer("mayoreo_sequia_vi.csv")
 my_sequia_anual = leer("mayoreo_sequia_anual.csv")
 MY_H_SEQUIA = 12                                   # más allá de un año la respuesta mes a mes no es estable
+# la sequía como instrumento, con conjuntos de Anderson-Rubin (construir_robustez_mayoreo.py)
+my_ar = leer("mayoreo_sequia_ar.csv")
+MY_REZAGOS = int(my_traslado["rezagos"].iat[0])
+MY_DESDE = pd.Timestamp(my_traslado["desde"].iat[0])
 
 
 def im_trayectoria(canasta):
