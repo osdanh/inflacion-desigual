@@ -1,0 +1,81 @@
+﻿canasta,anio,tipo,efecto,placebo_p05,placebo_p95
+Refrescos,2019,fuera de los normales,-0.313,-1.032,0.638
+Jugos y néctares,2019,fuera de los normales,-0.402,-1.032,0.638
+Concentrados para refrescos,2019,fuera de los normales,0.267,-1.032,0.638
+Bebidas energéticas,2019,fuera de los normales,,-1.032,0.638
+Cigarros,2019,fuera de los normales,-2.052,-1.032,0.638
+Bebidas con impuesto,2019,fuera de los normales,-0.314,-0.940,0.542
+Bebidas y cigarros,2019,fuera de los normales,-0.845,-0.761,0.399
+Azúcar (no paga),2019,fuera de los normales,-1.314,-1.032,0.638
+Dulces y panes (no pagan),2019,fuera de los normales,-0.517,-0.626,0.251
+Cerveza (no paga),2019,fuera de los normales,0.507,-1.032,0.638
+Refrescos,2020,fuera de los normales,-0.281,-1.097,0.871
+Jugos y néctares,2020,fuera de los normales,-0.745,-1.097,0.871
+Concentrados para refrescos,2020,fuera de los normales,-0.359,-1.097,0.871
+Bebidas energéticas,2020,fuera de los normales,,-1.097,0.871
+Cigarros,2020,fuera de los normales,4.324,-1.097,0.871
+Bebidas con impuesto,2020,fuera de los normales,-0.339,-1.017,0.712
+Bebidas y cigarros,2020,fuera de los normales,1.055,-0.888,0.463
+Azúcar (no paga),2020,fuera de los normales,1.163,-1.097,0.871
+Dulces y panes (no pagan),2020,fuera de los normales,-0.625,-0.732,0.311
+Cerveza (no paga),2020,fuera de los normales,0.092,-1.097,0.871
+Refrescos,2021,normal,0.254,-1.165,0.852
+Jugos y néctares,2021,normal,-0.210,-1.165,0.852
+Concentrados para refrescos,2021,normal,0.897,-1.165,0.852
+Bebidas energéticas,2021,normal,,-1.165,0.852
+Cigarros,2021,normal,-0.879,-1.165,0.852
+Bebidas con impuesto,2021,normal,0.208,-1.021,0.732
+Bebidas y cigarros,2021,normal,-0.123,-0.762,0.552
+Azúcar (no paga),2021,normal,-0.108,-1.165,0.852
+Dulces y panes (no pagan),2021,normal,-0.324,-0.608,0.386
+Cerveza (no paga),2021,normal,-0.041,-1.165,0.852
+Refrescos,2022,normal,-0.742,-1.116,0.978
+Jugos y néctares,2022,normal,-0.364,-1.116,0.978
+Concentrados para refrescos,2022,normal,0.182,-1.116,0.978
+Bebidas energéticas,2022,normal,,-1.116,0.978
+Cigarros,2022,normal,-0.058,-1.116,0.978
+Bebidas con impuesto,2022,normal,-0.681,-1.094,0.893
+Bebidas y cigarros,2022,normal,-0.492,-0.744,0.733
+Azúcar (no paga),2022,normal,0.561,-1.116,0.978
+Dulces y panes (no pagan),2022,normal,0.408,-0.573,0.575
+Cerveza (no paga),2022,normal,-0.657,-1.116,0.978
+Refrescos,2023,normal,0.307,-0.702,1.148
+Jugos y néctares,2023,normal,-0.176,-0.702,1.148
+Concentrados para refrescos,2023,normal,-0.635,-0.702,1.148
+Bebidas energéticas,2023,normal,,-0.702,1.148
+Cigarros,2023,normal,0.571,-0.702,1.148
+Bebidas con impuesto,2023,normal,0.233,-0.614,1.031
+Bebidas y cigarros,2023,normal,0.335,-0.466,0.847
+Azúcar (no paga),2023,normal,1.626,-0.702,1.148
+Dulces y panes (no pagan),2023,normal,-0.024,-0.324,0.662
+Cerveza (no paga),2023,normal,0.346,-0.702,1.148
+Refrescos,2024,normal,0.304,-1.254,0.815
+Jugos y néctares,2024,normal,-0.315,-1.254,0.815
+Concentrados para refrescos,2024,normal,-0.150,-1.254,0.815
+Bebidas energéticas,2024,normal,,-1.254,0.815
+Cigarros,2024,normal,-0.011,-1.254,0.815
+Bebidas con impuesto,2024,normal,0.221,-1.098,0.720
+Bebidas y cigarros,2024,normal,0.150,-0.736,0.566
+Azúcar (no paga),2024,normal,-1.629,-1.254,0.815
+Dulces y panes (no pagan),2024,normal,-0.150,-0.544,0.419
+Cerveza (no paga),2024,normal,0.074,-1.254,0.815
+Refrescos,2025,normal,-0.119,-0.931,0.873
+Jugos y néctares,2025,normal,1.072,-0.931,0.873
+Concentrados para refrescos,2025,normal,-0.287,-0.931,0.873
+Bebidas energéticas,2025,normal,,-0.931,0.873
+Cigarros,2025,normal,0.383,-0.931,0.873
+Bebidas con impuesto,2025,normal,0.022,-0.856,0.767
+Bebidas y cigarros,2025,normal,0.132,-0.718,0.565
+Azúcar (no paga),2025,normal,-0.420,-0.931,0.873
+Dulces y panes (no pagan),2025,normal,0.091,-0.557,0.425
+Cerveza (no paga),2025,normal,0.281,-0.931,0.873
+Refrescos,2026,tratado,4.663,-0.864,0.812
+Jugos y néctares,2026,tratado,3.394,-0.864,0.812
+Concentrados para refrescos,2026,tratado,14.283,-0.864,0.812
+Bebidas energéticas,2026,tratado,2.418,-0.864,0.812
+Cigarros,2026,tratado,11.323,-0.864,0.812
+Bebidas con impuesto,2026,tratado,4.658,-0.785,0.701
+Bebidas y cigarros,2026,tratado,6.640,-0.589,0.522
+Azúcar (no paga),2026,tratado,3.953,-0.864,0.812
+Dulces y panes (no pagan),2026,tratado,-0.048,-0.430,0.387
+Cerveza (no paga),2026,tratado,-0.289,-0.864,0.812

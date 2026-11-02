@@ -129,3 +129,38 @@ def fr_efectos(canasta, medida=FR_PRINCIPAL):
     """El efecto de una canasta para las 32 entidades (cada una contra las no fronterizas), en %."""
     d = fr_entidades[(fr_entidades["canasta"] == canasta) & (fr_entidades["medida"] == medida)]
     return d.set_index("cve_ent")["efecto"]
+
+
+# --- un experimento: refrescos y cigarros, enero de 2026 (tablas de construir_impuestos.py)
+IM_INICIO = pd.Timestamp(2026, 1, 1)               # entra en vigor el nuevo IEPS
+IM_PRINCIPAL = "ene-sep 2026"                      # promedio de enero a septiembre de 2026, contra diciembre de 2025
+IM_GRUPOS = {
+    "Con el impuesto nuevo": ["Refrescos", "Jugos y néctares", "Concentrados para refrescos", "Bebidas energéticas", "Cigarros",
+                              "Bebidas con impuesto", "Bebidas y cigarros"],
+    "Comprobaciones: no cambiaron de impuesto": ["Azúcar (no paga)", "Dulces y panes (no pagan)", "Cerveza (no paga)"],
+}
+IM_COMPROBACIONES = IM_GRUPOS["Comprobaciones: no cambiaron de impuesto"]
+IM_TRASLADO = {"Refrescos": "Refrescos con azúcar", "Cigarros": "Cigarros"}     # canastas con el esperado del impuesto completo
+
+im_eventos = leer("impuestos_eventos.csv", parse_dates=["fecha"])
+im_placebos = leer("impuestos_placebos.csv", dtype={"clave": str}, parse_dates=["fecha"])
+im_resumen = leer("impuestos_resumen.csv")
+im_eneros = leer("impuestos_eneros.csv")
+im_traslado = leer("impuestos_traslado.csv")
+im_incidencia = leer("impuestos_incidencia.csv")
+im_directo = leer("impuestos_directo.csv")
+IM_COMPARACION = im_placebos["clave"].nunique()   # productos de comparación
+im_placebos_ancha = im_placebos.pivot(index="fecha", columns="clave", values="efecto")
+
+
+def im_trayectoria(canasta):
+    """Efecto mensual de una canasta (%), julio de 2025 a septiembre de 2026; diciembre de 2025 = 0."""
+    return im_eventos[im_eventos["canasta"] == canasta].set_index("fecha")["efecto"]
+
+
+def im_esperado(canasta):
+    """Lo que subiría el precio si todo el impuesto llegara al consumidor (2026), o None."""
+    if canasta not in IM_TRASLADO:
+        return None
+    t = im_traslado[(im_traslado["producto"] == IM_TRASLADO[canasta]) & (im_traslado["anio"] == IM_INICIO.year)].iloc[0]
+    return t

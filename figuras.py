@@ -425,3 +425,129 @@ def frontera_incidencia(aportes, total, participacion):
     fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.16 * (alto - bajo), alto + 0.06 * (alto - bajo)])
     fig.update_xaxes(type="category", title=dict(text="Decil de ingreso (I: el de menor ingreso)", font=dict(size=12.5, color=TINTA2)))
     return linea_cero(fig)
+
+
+# ------------------------------------------------------------------ un experimento: refrescos y cigarros
+# El guinda es el producto con el impuesto nuevo; cada línea gris, un producto de comparación tratado como si lo pagara.
+COLOR_IMPUESTO = {"Bebidas": "#E69F00", "Cigarros": "#CC79A7"}                 # en la canasta de cada decil
+COLOR_DIRECTO = {"Pagaron más impuesto": GUINDA, "Frutas, verduras y pecuarios": "#009E73", "Energéticos": "#56B4E9",
+                 "Lo demás": TENUE}
+NOMBRE_PLACEBO_PRODUCTO = "Cada producto sin impuesto nuevo, como si lo pagara"
+
+
+def impuestos_eventos(tray, placebos, inicio, nombre, referencia=None):
+    """tray: efecto por mes en % (diciembre de 2025 = 0); placebos: meses x productos de comparación, cada uno contra
+    los demás. referencia: (valor, texto) de lo que subiría el precio si todo el impuesto llegara al consumidor."""
+    fig = go.Figure()
+    for k in placebos.columns:
+        fig.add_scatter(x=placebos.index, y=placebos[k], mode="lines", line=dict(color=GRIS_SERIE, width=0.9),
+                        showlegend=False, hoverinfo="skip")
+    fig.add_scatter(x=[None], y=[None], mode="lines", line=dict(color=GRIS_SERIE, width=1.2), name=NOMBRE_PLACEBO_PRODUCTO)
+    extremos = np.column_stack([placebos.min(axis=1), placebos.max(axis=1)])
+    fig.add_scatter(x=tray.index, y=tray, mode="lines+markers", line=dict(color=GUINDA, width=2.4),
+                    marker=dict(size=7, color=GUINDA, line=dict(color="white", width=1.5)), name=nombre, customdata=extremos,
+                    hovertemplate=("<b>%{y:+.1f} %</b><br>Sin impuesto nuevo: de %{customdata[0]:+.1f} a "
+                                   "%{customdata[1]:+.1f} %<extra></extra>"))
+    base(fig, 410, derecha=24)
+    eje_meses(fig, tray.index).update_layout(hovermode="x unified")
+    bajo = min(float(tray.min()), float(placebos.min().min()), 0.0)
+    alto = max(float(tray.max()), float(placebos.max().max()), referencia[0] if referencia else 0.0)
+    fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.08 * (alto - bajo), alto + 0.14 * (alto - bajo)])
+    linea_cero(fig)
+    vispera = f"{inicio - pd.Timedelta(days=15):%Y-%m-%d}"            # entre diciembre y el primer mes con el impuesto
+    fig.add_shape(type="line", xref="x", yref="paper", x0=vispera, x1=vispera, y0=0, y1=1, line=dict(color=TENUE, width=1, dash="dot"))
+    fig.add_annotation(x=vispera, y=1, yref="paper", yanchor="top", xanchor="right", xshift=-6, showarrow=False,
+                       text=f"Enero de {inicio.year}: sube el IEPS", font=dict(size=12, color=TINTA2))
+    if referencia:
+        fig.add_hline(referencia[0], line_color=TENUE, line_width=1, line_dash="dot")
+        fig.add_annotation(x=tray.index[0], y=referencia[0], yshift=10, xanchor="left", showarrow=False, bgcolor="white",
+                           borderpad=1, text=referencia[1], font=dict(size=12, color=TINTA2))
+    ultimo = float(tray.iloc[-1])
+    fig.add_annotation(x=tray.index[-1], y=ultimo, xanchor="right", xshift=6, yanchor="bottom", yshift=9, showarrow=False,
+                       bgcolor="white", borderpad=1, text=f"<b>{nombre}</b> {ultimo:+.1f} %", font=dict(color=GUINDA, size=12.5))
+    return fig
+
+
+def impuestos_eneros(eneros, especial=None):
+    """Cada enero contra lo normal, en %. eneros: por año, efecto, tipo (normal, fuera de los normales, tratado) y la
+    franja donde caen nueve de cada diez productos de comparación ese mismo enero. especial: (año, texto) de otro enero
+    en que el impuesto también cambió."""
+    e = eneros.assign(x=eneros["anio"].astype(str))
+    fig = go.Figure()
+    fig.add_bar(x=e["x"], y=e["placebo_p95"] - e["placebo_p05"], base=e["placebo_p05"], width=0.78,
+                marker=dict(color=FRANJA, cornerradius=3), name="9 de cada 10 productos sin impuesto nuevo", hoverinfo="skip")
+    marcar = e["anio"] == (especial[0] if especial else None)
+    anio = int(e.loc[e["tipo"] == "tratado", "anio"].iat[0])
+    rayado = dict(color="white", line=dict(color=TENUE, width=1.2), pattern=dict(shape="/", fgcolor=TENUE, size=5, solidity=0.35))
+    grupos = [("tratado", dict(color=GUINDA), f"{anio}: el impuesto nuevo"),
+              ("normal", dict(color=TENUE), "Eneros normales (la referencia)"),
+              ("fuera de los normales", rayado, "Fuera de la referencia")]
+    for tipo, estilo, nombre in grupos:
+        d = e[(e["tipo"] == tipo) & ~marcar]
+        fig.add_bar(x=d["x"], y=d["efecto"], width=0.42, name=nombre, marker=dict(cornerradius=3, **estilo),
+                    text=[f"{v:+.1f}" for v in d["efecto"]], textposition="outside", textfont=dict(color=TINTA, size=12),
+                    cliponaxis=False, hovertemplate="%{x}: %{y:+.1f} %<extra></extra>")
+    if especial:
+        d = e[marcar]
+        fig.add_bar(x=d["x"], y=d["efecto"], width=0.42, name=especial[1], marker=dict(color="#C1504C", cornerradius=3),
+                    text=[f"{v:+.1f}" for v in d["efecto"]], textposition="outside", textfont=dict(color=TINTA, size=12),
+                    cliponaxis=False, hovertemplate="%{x}: %{y:+.1f} %<extra></extra>")
+    base(fig, 350)
+    fig.update_layout(barmode="overlay", legend=dict(traceorder="normal"))
+    bajo = min(float(e[["efecto", "placebo_p05"]].min().min()), 0.0)
+    alto = max(float(e[["efecto", "placebo_p95"]].max().max()), 0.0)
+    fig.update_yaxes(ticksuffix=" %", range=[bajo - 0.1 * (alto - bajo), alto + 0.16 * (alto - bajo)])
+    fig.update_xaxes(type="category", title=dict(text="Enero contra diciembre, cada año", font=dict(size=12.5, color=TINTA2)))
+    return linea_cero(fig)
+
+
+
+def impuestos_incidencia(inc):
+    """Por decil (I a X): aportes de las bebidas y los cigarros al costo de la canasta (pp), el total con su intervalo
+    (5 a 95 % de los sorteos con el ruido de los placebos) y los pesos de más al mes por hogar."""
+    fig = go.Figure()
+    for nombre in COLOR_IMPUESTO:
+        clave = nombre.lower()
+        fig.add_bar(x=inc["nivel"], y=inc[f"aporte_{clave}"], name=nombre,
+                    marker=dict(color=COLOR_IMPUESTO[nombre], line=dict(color="white", width=1.5)),
+                    customdata=inc[f"participacion_{clave}"], hovertemplate=f"{nombre}: %{{y:.2f}} pp (%{{customdata:.1f}} % de su gasto)")
+    fig.add_scatter(x=inc["nivel"], y=inc["efecto"], mode="markers", marker=dict(size=6, color=TINTA, symbol="line-ew",
+                                                                                 line=dict(color=TINTA, width=0)),
+                    error_y=dict(type="data", symmetric=False, array=inc["efecto_p95"] - inc["efecto"],
+                                 arrayminus=inc["efecto"] - inc["efecto_p05"], color=TINTA2, thickness=1.3, width=5),
+                    name="Intervalo", showlegend=False,
+                    customdata=np.column_stack([inc["efecto_p05"], inc["efecto_p95"], inc["pesos_mes"]]),
+                    hovertemplate=("<b>Total: %{y:.2f} %</b> (de %{customdata[0]:.2f} a %{customdata[1]:.2f})<br>"
+                                   "%{customdata[2]:.0f} pesos más al mes por hogar<extra></extra>"))
+    fig.add_scatter(x=inc["nivel"], y=inc["efecto_p95"], mode="text", text=[f"<b>{v:.2f} %</b>" for v in inc["efecto"]],
+                    textposition="top center", textfont=dict(color=TINTA, size=12.5), cliponaxis=False, showlegend=False,
+                    hoverinfo="skip")
+    base(fig, 380)
+    fig.update_layout(barmode="stack", bargap=0.42, hovermode="x unified", legend=dict(traceorder="normal"))
+    fig.update_yaxes(ticksuffix=" %", range=[0, float(inc["efecto_p95"].max()) * 1.18])
+    fig.update_xaxes(type="category", title=dict(text="Decil de ingreso (I: el de menor ingreso)", font=dict(size=12.5, color=TINTA2)))
+    return fig
+
+
+def impuestos_directo(directo):
+    """Enero de 2026 contra un enero normal en el índice de los deciles I y X, repartido por tipo de producto (puntos
+    porcentuales). El rombo es lo que marca el índice del decil; lo que no cuadra por la aproximación va en «Lo demás»."""
+    filas = {"I": "Decil I", "X": "Decil X", "I menos X": "I menos X"}
+    d = directo.set_index("decil").loc[list(filas)].copy()
+    d["Frutas, verduras y pecuarios"] = d["Frutas y verduras"] + d["Pecuarios"]
+    d["Lo demás"] = d["Lo demás"] + d["directo"] - d["suma"]
+    y = [filas[k] for k in d.index][::-1]
+    fig = go.Figure()
+    for grupo, color in COLOR_DIRECTO.items():
+        fig.add_bar(x=d[grupo].iloc[::-1], y=y, orientation="h", name=grupo, width=0.52,
+                    marker=dict(color=color, line=dict(color="white", width=1)),
+                    hovertemplate=f"{grupo}: %{{x:+.2f}} puntos<extra></extra>")
+    fig.add_scatter(x=d["directo"].iloc[::-1], y=y, mode="markers", name="Lo que marca el índice del decil",
+                    marker=dict(symbol="diamond", size=12, color=TINTA, line=dict(color="white", width=1.5)),
+                    hovertemplate="Índice del decil: %{x:+.2f} puntos<extra></extra>")
+    base(fig, 330)
+    fig.update_layout(barmode="relative", legend=dict(traceorder="normal"))
+    fig.update_xaxes(showgrid=True, gridcolor=REJILLA, showline=False, ticks="", zeroline=False,
+                     title=dict(text="Puntos porcentuales", font=dict(size=12.5, color=TINTA2)))
+    fig.update_yaxes(showgrid=False, tickfont=dict(color=TINTA, size=12.5), categoryorder="array", categoryarray=y)
+    return linea_cero(fig, horizontal=False)

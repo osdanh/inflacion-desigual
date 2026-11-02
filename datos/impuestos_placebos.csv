@@ -1,0 +1,871 @@
+﻿clave,titulo,fecha,efecto
+1.1.1.01.002,Botanas elaboradas con cereales,2025-07-01,-0.900
+1.1.1.01.002,Botanas elaboradas con cereales,2025-08-01,-0.622
+1.1.1.01.002,Botanas elaboradas con cereales,2025-09-01,-0.403
+1.1.1.01.002,Botanas elaboradas con cereales,2025-10-01,-0.238
+1.1.1.01.002,Botanas elaboradas con cereales,2025-11-01,0.338
+1.1.1.01.002,Botanas elaboradas con cereales,2025-12-01,0.000
+1.1.1.01.002,Botanas elaboradas con cereales,2026-01-01,0.117
+1.1.1.01.002,Botanas elaboradas con cereales,2026-02-01,0.011
+1.1.1.01.002,Botanas elaboradas con cereales,2026-03-01,-0.121
+1.1.1.01.002,Botanas elaboradas con cereales,2026-04-01,-0.318
+1.1.1.01.002,Botanas elaboradas con cereales,2026-05-01,-0.203
+1.1.1.01.002,Botanas elaboradas con cereales,2026-06-01,-0.387
+1.1.1.01.002,Botanas elaboradas con cereales,2026-07-01,0.171
+1.1.1.01.002,Botanas elaboradas con cereales,2026-08-01,0.672
+1.1.1.01.002,Botanas elaboradas con cereales,2026-09-01,1.397
+1.1.1.01.006,Maíz,2025-07-01,4.458
+1.1.1.01.006,Maíz,2025-08-01,4.266
+1.1.1.01.006,Maíz,2025-09-01,3.166
+1.1.1.01.006,Maíz,2025-10-01,1.907
+1.1.1.01.006,Maíz,2025-11-01,1.274
+1.1.1.01.006,Maíz,2025-12-01,0.000
+1.1.1.01.006,Maíz,2026-01-01,-0.760
+1.1.1.01.006,Maíz,2026-02-01,-1.341
+1.1.1.01.006,Maíz,2026-03-01,-1.963
+1.1.1.01.006,Maíz,2026-04-01,-2.574
+1.1.1.01.006,Maíz,2026-05-01,-2.749
+1.1.1.01.006,Maíz,2026-06-01,-2.937
+1.1.1.01.006,Maíz,2026-07-01,-3.610
+1.1.1.01.006,Maíz,2026-08-01,-4.295
+1.1.1.01.006,Maíz,2026-09-01,-3.896
+1.1.1.01.007,Masa y harinas de maíz,2025-07-01,1.468
+1.1.1.01.007,Masa y harinas de maíz,2025-08-01,1.101
+1.1.1.01.007,Masa y harinas de maíz,2025-09-01,0.973
+1.1.1.01.007,Masa y harinas de maíz,2025-10-01,0.614
+1.1.1.01.007,Masa y harinas de maíz,2025-11-01,0.685
+1.1.1.01.007,Masa y harinas de maíz,2025-12-01,0.000
+1.1.1.01.007,Masa y harinas de maíz,2026-01-01,0.245
+1.1.1.01.007,Masa y harinas de maíz,2026-02-01,0.388
+1.1.1.01.007,Masa y harinas de maíz,2026-03-01,0.182
+1.1.1.01.007,Masa y harinas de maíz,2026-04-01,0.215
+1.1.1.01.007,Masa y harinas de maíz,2026-05-01,0.318
+1.1.1.01.007,Masa y harinas de maíz,2026-06-01,0.710
+1.1.1.01.007,Masa y harinas de maíz,2026-07-01,0.631
+1.1.1.01.007,Masa y harinas de maíz,2026-08-01,0.597
+1.1.1.01.007,Masa y harinas de maíz,2026-09-01,0.302
+1.1.1.01.014,Tortilla de maíz,2025-07-01,0.664
+1.1.1.01.014,Tortilla de maíz,2025-08-01,0.276
+1.1.1.01.014,Tortilla de maíz,2025-09-01,0.164
+1.1.1.01.014,Tortilla de maíz,2025-10-01,-0.092
+1.1.1.01.014,Tortilla de maíz,2025-11-01,0.236
+1.1.1.01.014,Tortilla de maíz,2025-12-01,0.000
+1.1.1.01.014,Tortilla de maíz,2026-01-01,0.133
+1.1.1.01.014,Tortilla de maíz,2026-02-01,0.078
+1.1.1.01.014,Tortilla de maíz,2026-03-01,-0.632
+1.1.1.01.014,Tortilla de maíz,2026-04-01,-0.704
+1.1.1.01.014,Tortilla de maíz,2026-05-01,-0.142
+1.1.1.01.014,Tortilla de maíz,2026-06-01,-0.198
+1.1.1.01.014,Tortilla de maíz,2026-07-01,-0.052
+1.1.1.01.014,Tortilla de maíz,2026-08-01,-0.059
+1.1.1.01.014,Tortilla de maíz,2026-09-01,0.131
+1.1.1.01.016,Tostadas,2025-07-01,0.670
+1.1.1.01.016,Tostadas,2025-08-01,0.286
+1.1.1.01.016,Tostadas,2025-09-01,-0.056
+1.1.1.01.016,Tostadas,2025-10-01,0.157
+1.1.1.01.016,Tostadas,2025-11-01,0.564
+1.1.1.01.016,Tostadas,2025-12-01,0.000
+1.1.1.01.016,Tostadas,2026-01-01,-0.145
+1.1.1.01.016,Tostadas,2026-02-01,-0.304
+1.1.1.01.016,Tostadas,2026-03-01,0.046
+1.1.1.01.016,Tostadas,2026-04-01,-0.164
+1.1.1.01.016,Tostadas,2026-05-01,-0.662
+1.1.1.01.016,Tostadas,2026-06-01,-0.773
+1.1.1.01.016,Tostadas,2026-07-01,-0.710
+1.1.1.01.016,Tostadas,2026-08-01,-0.900
+1.1.1.01.016,Tostadas,2026-09-01,-1.357
+1.1.1.02.008,Pan blanco,2025-07-01,0.529
+1.1.1.02.008,Pan blanco,2025-08-01,0.164
+1.1.1.02.008,Pan blanco,2025-09-01,0.266
+1.1.1.02.008,Pan blanco,2025-10-01,0.285
+1.1.1.02.008,Pan blanco,2025-11-01,0.441
+1.1.1.02.008,Pan blanco,2025-12-01,0.000
+1.1.1.02.008,Pan blanco,2026-01-01,0.002
+1.1.1.02.008,Pan blanco,2026-02-01,0.912
+1.1.1.02.008,Pan blanco,2026-03-01,1.349
+1.1.1.02.008,Pan blanco,2026-04-01,0.919
+1.1.1.02.008,Pan blanco,2026-05-01,0.885
+1.1.1.02.008,Pan blanco,2026-06-01,0.359
+1.1.1.02.008,Pan blanco,2026-07-01,0.400
+1.1.1.02.008,Pan blanco,2026-08-01,0.334
+1.1.1.02.008,Pan blanco,2026-09-01,0.331
+1.1.1.02.009,Pan de caja,2025-07-01,-0.244
+1.1.1.02.009,Pan de caja,2025-08-01,-0.387
+1.1.1.02.009,Pan de caja,2025-09-01,0.266
+1.1.1.02.009,Pan de caja,2025-10-01,0.521
+1.1.1.02.009,Pan de caja,2025-11-01,0.944
+1.1.1.02.009,Pan de caja,2025-12-01,0.000
+1.1.1.02.009,Pan de caja,2026-01-01,-0.402
+1.1.1.02.009,Pan de caja,2026-02-01,-0.776
+1.1.1.02.009,Pan de caja,2026-03-01,-1.306
+1.1.1.02.009,Pan de caja,2026-04-01,-1.119
+1.1.1.02.009,Pan de caja,2026-05-01,-0.774
+1.1.1.02.009,Pan de caja,2026-06-01,-1.572
+1.1.1.02.009,Pan de caja,2026-07-01,-2.768
+1.1.1.02.009,Pan de caja,2026-08-01,-3.078
+1.1.1.02.009,Pan de caja,2026-09-01,-2.786
+1.1.1.02.010,Pan dulce,2025-07-01,0.574
+1.1.1.02.010,Pan dulce,2025-08-01,0.401
+1.1.1.02.010,Pan dulce,2025-09-01,0.485
+1.1.1.02.010,Pan dulce,2025-10-01,0.493
+1.1.1.02.010,Pan dulce,2025-11-01,0.634
+1.1.1.02.010,Pan dulce,2025-12-01,0.000
+1.1.1.02.010,Pan dulce,2026-01-01,-0.122
+1.1.1.02.010,Pan dulce,2026-02-01,0.544
+1.1.1.02.010,Pan dulce,2026-03-01,0.765
+1.1.1.02.010,Pan dulce,2026-04-01,0.805
+1.1.1.02.010,Pan dulce,2026-05-01,0.643
+1.1.1.02.010,Pan dulce,2026-06-01,0.326
+1.1.1.02.010,Pan dulce,2026-07-01,0.228
+1.1.1.02.010,Pan dulce,2026-08-01,0.247
+1.1.1.02.010,Pan dulce,2026-09-01,0.677
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2025-07-01,-2.032
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2025-08-01,-1.594
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2025-09-01,-0.607
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2025-10-01,-0.204
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2025-11-01,0.426
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2025-12-01,0.000
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-01-01,-0.576
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-02-01,-0.683
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-03-01,-0.562
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-04-01,-0.688
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-05-01,-1.393
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-06-01,-1.542
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-07-01,-1.696
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-08-01,-2.024
+1.1.1.02.012,"Pasteles, pastelillos y pan dulce empaquetado",2026-09-01,-2.454
+1.1.1.02.013,Pastelillos y pasteles a granel,2025-07-01,-0.170
+1.1.1.02.013,Pastelillos y pasteles a granel,2025-08-01,-0.293
+1.1.1.02.013,Pastelillos y pasteles a granel,2025-09-01,-0.218
+1.1.1.02.013,Pastelillos y pasteles a granel,2025-10-01,-0.210
+1.1.1.02.013,Pastelillos y pasteles a granel,2025-11-01,0.169
+1.1.1.02.013,Pastelillos y pasteles a granel,2025-12-01,0.000
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-01-01,-0.018
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-02-01,0.558
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-03-01,0.365
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-04-01,0.115
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-05-01,0.554
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-06-01,0.655
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-07-01,0.522
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-08-01,0.704
+1.1.1.02.013,Pastelillos y pasteles a granel,2026-09-01,0.713
+1.1.1.03.004,Galletas,2025-07-01,1.186
+1.1.1.03.004,Galletas,2025-08-01,0.912
+1.1.1.03.004,Galletas,2025-09-01,0.963
+1.1.1.03.004,Galletas,2025-10-01,0.735
+1.1.1.03.004,Galletas,2025-11-01,1.507
+1.1.1.03.004,Galletas,2025-12-01,0.000
+1.1.1.03.004,Galletas,2026-01-01,0.057
+1.1.1.03.004,Galletas,2026-02-01,-0.259
+1.1.1.03.004,Galletas,2026-03-01,0.164
+1.1.1.03.004,Galletas,2026-04-01,0.134
+1.1.1.03.004,Galletas,2026-05-01,1.110
+1.1.1.03.004,Galletas,2026-06-01,1.544
+1.1.1.03.004,Galletas,2026-07-01,1.446
+1.1.1.03.004,Galletas,2026-08-01,1.158
+1.1.1.03.004,Galletas,2026-09-01,1.757
+1.1.1.03.005,Harinas de trigo,2025-07-01,0.950
+1.1.1.03.005,Harinas de trigo,2025-08-01,0.306
+1.1.1.03.005,Harinas de trigo,2025-09-01,1.221
+1.1.1.03.005,Harinas de trigo,2025-10-01,1.315
+1.1.1.03.005,Harinas de trigo,2025-11-01,1.044
+1.1.1.03.005,Harinas de trigo,2025-12-01,0.000
+1.1.1.03.005,Harinas de trigo,2026-01-01,0.317
+1.1.1.03.005,Harinas de trigo,2026-02-01,-0.604
+1.1.1.03.005,Harinas de trigo,2026-03-01,-0.648
+1.1.1.03.005,Harinas de trigo,2026-04-01,-1.481
+1.1.1.03.005,Harinas de trigo,2026-05-01,-1.916
+1.1.1.03.005,Harinas de trigo,2026-06-01,-3.221
+1.1.1.03.005,Harinas de trigo,2026-07-01,-3.630
+1.1.1.03.005,Harinas de trigo,2026-08-01,-4.735
+1.1.1.03.005,Harinas de trigo,2026-09-01,-5.138
+1.1.1.03.011,Pasta para sopa,2025-07-01,1.203
+1.1.1.03.011,Pasta para sopa,2025-08-01,1.480
+1.1.1.03.011,Pasta para sopa,2025-09-01,0.334
+1.1.1.03.011,Pasta para sopa,2025-10-01,-0.200
+1.1.1.03.011,Pasta para sopa,2025-11-01,0.496
+1.1.1.03.011,Pasta para sopa,2025-12-01,0.000
+1.1.1.03.011,Pasta para sopa,2026-01-01,0.003
+1.1.1.03.011,Pasta para sopa,2026-02-01,-1.163
+1.1.1.03.011,Pasta para sopa,2026-03-01,-0.249
+1.1.1.03.011,Pasta para sopa,2026-04-01,-1.041
+1.1.1.03.011,Pasta para sopa,2026-05-01,-0.387
+1.1.1.03.011,Pasta para sopa,2026-06-01,-0.682
+1.1.1.03.011,Pasta para sopa,2026-07-01,-1.077
+1.1.1.03.011,Pasta para sopa,2026-08-01,-1.321
+1.1.1.03.011,Pasta para sopa,2026-09-01,-2.095
+1.1.1.03.015,Tortillas de harina de trigo,2025-07-01,2.044
+1.1.1.03.015,Tortillas de harina de trigo,2025-08-01,1.670
+1.1.1.03.015,Tortillas de harina de trigo,2025-09-01,1.178
+1.1.1.03.015,Tortillas de harina de trigo,2025-10-01,0.675
+1.1.1.03.015,Tortillas de harina de trigo,2025-11-01,0.724
+1.1.1.03.015,Tortillas de harina de trigo,2025-12-01,0.000
+1.1.1.03.015,Tortillas de harina de trigo,2026-01-01,0.027
+1.1.1.03.015,Tortillas de harina de trigo,2026-02-01,0.384
+1.1.1.03.015,Tortillas de harina de trigo,2026-03-01,0.582
+1.1.1.03.015,Tortillas de harina de trigo,2026-04-01,0.451
+1.1.1.03.015,Tortillas de harina de trigo,2026-05-01,0.318
+1.1.1.03.015,Tortillas de harina de trigo,2026-06-01,-0.420
+1.1.1.03.015,Tortillas de harina de trigo,2026-07-01,-1.034
+1.1.1.03.015,Tortillas de harina de trigo,2026-08-01,-1.160
+1.1.1.03.015,Tortillas de harina de trigo,2026-09-01,-1.394
+1.1.1.04.001,Arroz,2025-07-01,0.331
+1.1.1.04.001,Arroz,2025-08-01,0.740
+1.1.1.04.001,Arroz,2025-09-01,0.699
+1.1.1.04.001,Arroz,2025-10-01,0.285
+1.1.1.04.001,Arroz,2025-11-01,0.383
+1.1.1.04.001,Arroz,2025-12-01,0.000
+1.1.1.04.001,Arroz,2026-01-01,0.217
+1.1.1.04.001,Arroz,2026-02-01,-0.215
+1.1.1.04.001,Arroz,2026-03-01,0.587
+1.1.1.04.001,Arroz,2026-04-01,0.839
+1.1.1.04.001,Arroz,2026-05-01,0.765
+1.1.1.04.001,Arroz,2026-06-01,0.803
+1.1.1.04.001,Arroz,2026-07-01,0.070
+1.1.1.04.001,Arroz,2026-08-01,-0.481
+1.1.1.04.001,Arroz,2026-09-01,0.524
+1.1.1.04.003,Cereales en hojuelas,2025-07-01,0.618
+1.1.1.04.003,Cereales en hojuelas,2025-08-01,-0.359
+1.1.1.04.003,Cereales en hojuelas,2025-09-01,0.968
+1.1.1.04.003,Cereales en hojuelas,2025-10-01,1.873
+1.1.1.04.003,Cereales en hojuelas,2025-11-01,1.746
+1.1.1.04.003,Cereales en hojuelas,2025-12-01,0.000
+1.1.1.04.003,Cereales en hojuelas,2026-01-01,-0.147
+1.1.1.04.003,Cereales en hojuelas,2026-02-01,0.292
+1.1.1.04.003,Cereales en hojuelas,2026-03-01,0.387
+1.1.1.04.003,Cereales en hojuelas,2026-04-01,-0.223
+1.1.1.04.003,Cereales en hojuelas,2026-05-01,0.542
+1.1.1.04.003,Cereales en hojuelas,2026-06-01,0.540
+1.1.1.04.003,Cereales en hojuelas,2026-07-01,0.458
+1.1.1.04.003,Cereales en hojuelas,2026-08-01,-0.355
+1.1.1.04.003,Cereales en hojuelas,2026-09-01,-1.732
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2025-07-01,-1.043
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2025-08-01,-0.521
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2025-09-01,-0.088
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2025-10-01,0.058
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2025-11-01,0.522
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2025-12-01,0.000
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-01-01,-0.203
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-02-01,-0.397
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-03-01,-0.573
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-04-01,-0.267
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-05-01,-0.264
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-06-01,-0.712
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-07-01,-0.664
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-08-01,-0.681
+1.1.2.08.019,"Carnes secas, procesadas y otros embutidos",2026-09-01,-0.567
+1.1.2.08.020,Chorizo,2025-07-01,-0.472
+1.1.2.08.020,Chorizo,2025-08-01,-0.686
+1.1.2.08.020,Chorizo,2025-09-01,-0.486
+1.1.2.08.020,Chorizo,2025-10-01,-0.662
+1.1.2.08.020,Chorizo,2025-11-01,0.334
+1.1.2.08.020,Chorizo,2025-12-01,0.000
+1.1.2.08.020,Chorizo,2026-01-01,0.084
+1.1.2.08.020,Chorizo,2026-02-01,-0.063
+1.1.2.08.020,Chorizo,2026-03-01,0.404
+1.1.2.08.020,Chorizo,2026-04-01,0.560
+1.1.2.08.020,Chorizo,2026-05-01,0.659
+1.1.2.08.020,Chorizo,2026-06-01,0.468
+1.1.2.08.020,Chorizo,2026-07-01,0.176
+1.1.2.08.020,Chorizo,2026-08-01,-0.022
+1.1.2.08.020,Chorizo,2026-09-01,0.480
+1.1.2.08.021,Jamón,2025-07-01,-0.529
+1.1.2.08.021,Jamón,2025-08-01,0.255
+1.1.2.08.021,Jamón,2025-09-01,0.546
+1.1.2.08.021,Jamón,2025-10-01,-0.039
+1.1.2.08.021,Jamón,2025-11-01,0.596
+1.1.2.08.021,Jamón,2025-12-01,0.000
+1.1.2.08.021,Jamón,2026-01-01,-1.754
+1.1.2.08.021,Jamón,2026-02-01,-1.291
+1.1.2.08.021,Jamón,2026-03-01,-1.534
+1.1.2.08.021,Jamón,2026-04-01,-1.159
+1.1.2.08.021,Jamón,2026-05-01,-0.371
+1.1.2.08.021,Jamón,2026-06-01,-0.304
+1.1.2.08.021,Jamón,2026-07-01,-1.418
+1.1.2.08.021,Jamón,2026-08-01,-1.976
+1.1.2.08.021,Jamón,2026-09-01,-1.049
+1.1.2.08.023,Salchichas,2025-07-01,-2.107
+1.1.2.08.023,Salchichas,2025-08-01,-0.769
+1.1.2.08.023,Salchichas,2025-09-01,-1.529
+1.1.2.08.023,Salchichas,2025-10-01,-1.087
+1.1.2.08.023,Salchichas,2025-11-01,-0.303
+1.1.2.08.023,Salchichas,2025-12-01,0.000
+1.1.2.08.023,Salchichas,2026-01-01,-0.846
+1.1.2.08.023,Salchichas,2026-02-01,-0.215
+1.1.2.08.023,Salchichas,2026-03-01,-0.129
+1.1.2.08.023,Salchichas,2026-04-01,-0.196
+1.1.2.08.023,Salchichas,2026-05-01,-0.195
+1.1.2.08.023,Salchichas,2026-06-01,-0.200
+1.1.2.08.023,Salchichas,2026-07-01,0.086
+1.1.2.08.023,Salchichas,2026-08-01,-1.058
+1.1.2.08.023,Salchichas,2026-09-01,-0.860
+1.1.2.08.024,Tocino,2025-07-01,-0.801
+1.1.2.08.024,Tocino,2025-08-01,-0.210
+1.1.2.08.024,Tocino,2025-09-01,0.424
+1.1.2.08.024,Tocino,2025-10-01,0.634
+1.1.2.08.024,Tocino,2025-11-01,0.630
+1.1.2.08.024,Tocino,2025-12-01,0.000
+1.1.2.08.024,Tocino,2026-01-01,-0.142
+1.1.2.08.024,Tocino,2026-02-01,-0.608
+1.1.2.08.024,Tocino,2026-03-01,-0.914
+1.1.2.08.024,Tocino,2026-04-01,-0.650
+1.1.2.08.024,Tocino,2026-05-01,0.006
+1.1.2.08.024,Tocino,2026-06-01,0.126
+1.1.2.08.024,Tocino,2026-07-01,-0.436
+1.1.2.08.024,Tocino,2026-08-01,-2.117
+1.1.2.08.024,Tocino,2026-09-01,-1.175
+1.1.3.10.026,Atún y sardina en lata,2025-07-01,0.304
+1.1.3.10.026,Atún y sardina en lata,2025-08-01,-0.103
+1.1.3.10.026,Atún y sardina en lata,2025-09-01,-0.215
+1.1.3.10.026,Atún y sardina en lata,2025-10-01,-0.350
+1.1.3.10.026,Atún y sardina en lata,2025-11-01,0.380
+1.1.3.10.026,Atún y sardina en lata,2025-12-01,0.000
+1.1.3.10.026,Atún y sardina en lata,2026-01-01,0.234
+1.1.3.10.026,Atún y sardina en lata,2026-02-01,0.438
+1.1.3.10.026,Atún y sardina en lata,2026-03-01,0.591
+1.1.3.10.026,Atún y sardina en lata,2026-04-01,2.049
+1.1.3.10.026,Atún y sardina en lata,2026-05-01,2.559
+1.1.3.10.026,Atún y sardina en lata,2026-06-01,2.026
+1.1.3.10.026,Atún y sardina en lata,2026-07-01,1.861
+1.1.3.10.026,Atún y sardina en lata,2026-08-01,2.146
+1.1.3.10.026,Atún y sardina en lata,2026-09-01,2.360
+1.1.3.10.029,Otros pescados y mariscos en conserva,2025-07-01,-2.270
+1.1.3.10.029,Otros pescados y mariscos en conserva,2025-08-01,-1.605
+1.1.3.10.029,Otros pescados y mariscos en conserva,2025-09-01,-1.132
+1.1.3.10.029,Otros pescados y mariscos en conserva,2025-10-01,-0.899
+1.1.3.10.029,Otros pescados y mariscos en conserva,2025-11-01,-0.457
+1.1.3.10.029,Otros pescados y mariscos en conserva,2025-12-01,0.000
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-01-01,-0.274
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-02-01,-0.530
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-03-01,-0.594
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-04-01,-0.325
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-05-01,-0.377
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-06-01,-0.265
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-07-01,0.284
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-08-01,0.514
+1.1.3.10.029,Otros pescados y mariscos en conserva,2026-09-01,0.909
+1.1.4.11.034,Leche pasteurizada y fresca,2025-07-01,-1.218
+1.1.4.11.034,Leche pasteurizada y fresca,2025-08-01,-1.218
+1.1.4.11.034,Leche pasteurizada y fresca,2025-09-01,-0.922
+1.1.4.11.034,Leche pasteurizada y fresca,2025-10-01,-1.536
+1.1.4.11.034,Leche pasteurizada y fresca,2025-11-01,-0.733
+1.1.4.11.034,Leche pasteurizada y fresca,2025-12-01,0.000
+1.1.4.11.034,Leche pasteurizada y fresca,2026-01-01,0.381
+1.1.4.11.034,Leche pasteurizada y fresca,2026-02-01,0.187
+1.1.4.11.034,Leche pasteurizada y fresca,2026-03-01,-0.001
+1.1.4.11.034,Leche pasteurizada y fresca,2026-04-01,0.175
+1.1.4.11.034,Leche pasteurizada y fresca,2026-05-01,0.637
+1.1.4.11.034,Leche pasteurizada y fresca,2026-06-01,0.391
+1.1.4.11.034,Leche pasteurizada y fresca,2026-07-01,0.637
+1.1.4.11.034,Leche pasteurizada y fresca,2026-08-01,0.639
+1.1.4.11.034,Leche pasteurizada y fresca,2026-09-01,0.010
+1.1.4.12.032,Leche en polvo,2025-07-01,-1.673
+1.1.4.12.032,Leche en polvo,2025-08-01,-1.238
+1.1.4.12.032,Leche en polvo,2025-09-01,-1.111
+1.1.4.12.032,Leche en polvo,2025-10-01,0.385
+1.1.4.12.032,Leche en polvo,2025-11-01,0.545
+1.1.4.12.032,Leche en polvo,2025-12-01,0.000
+1.1.4.12.032,Leche en polvo,2026-01-01,-0.489
+1.1.4.12.032,Leche en polvo,2026-02-01,0.084
+1.1.4.12.032,Leche en polvo,2026-03-01,1.320
+1.1.4.12.032,Leche en polvo,2026-04-01,0.938
+1.1.4.12.032,Leche en polvo,2026-05-01,1.230
+1.1.4.12.032,Leche en polvo,2026-06-01,1.343
+1.1.4.12.032,Leche en polvo,2026-07-01,1.724
+1.1.4.12.032,Leche en polvo,2026-08-01,1.930
+1.1.4.12.032,Leche en polvo,2026-09-01,3.004
+1.1.4.13.030,Crema y otros productos a base de leche,2025-07-01,0.263
+1.1.4.13.030,Crema y otros productos a base de leche,2025-08-01,-0.017
+1.1.4.13.030,Crema y otros productos a base de leche,2025-09-01,0.057
+1.1.4.13.030,Crema y otros productos a base de leche,2025-10-01,0.637
+1.1.4.13.030,Crema y otros productos a base de leche,2025-11-01,0.694
+1.1.4.13.030,Crema y otros productos a base de leche,2025-12-01,0.000
+1.1.4.13.030,Crema y otros productos a base de leche,2026-01-01,0.869
+1.1.4.13.030,Crema y otros productos a base de leche,2026-02-01,0.740
+1.1.4.13.030,Crema y otros productos a base de leche,2026-03-01,0.066
+1.1.4.13.030,Crema y otros productos a base de leche,2026-04-01,0.220
+1.1.4.13.030,Crema y otros productos a base de leche,2026-05-01,1.081
+1.1.4.13.030,Crema y otros productos a base de leche,2026-06-01,1.111
+1.1.4.13.030,Crema y otros productos a base de leche,2026-07-01,1.633
+1.1.4.13.030,Crema y otros productos a base de leche,2026-08-01,1.874
+1.1.4.13.030,Crema y otros productos a base de leche,2026-09-01,1.877
+1.1.4.13.036,Queso amarillo,2025-07-01,0.114
+1.1.4.13.036,Queso amarillo,2025-08-01,-0.732
+1.1.4.13.036,Queso amarillo,2025-09-01,-1.881
+1.1.4.13.036,Queso amarillo,2025-10-01,0.412
+1.1.4.13.036,Queso amarillo,2025-11-01,1.607
+1.1.4.13.036,Queso amarillo,2025-12-01,0.000
+1.1.4.13.036,Queso amarillo,2026-01-01,0.849
+1.1.4.13.036,Queso amarillo,2026-02-01,-0.160
+1.1.4.13.036,Queso amarillo,2026-03-01,1.218
+1.1.4.13.036,Queso amarillo,2026-04-01,0.286
+1.1.4.13.036,Queso amarillo,2026-05-01,1.015
+1.1.4.13.036,Queso amarillo,2026-06-01,0.591
+1.1.4.13.036,Queso amarillo,2026-07-01,0.790
+1.1.4.13.036,Queso amarillo,2026-08-01,-0.346
+1.1.4.13.036,Queso amarillo,2026-09-01,-2.934
+1.1.4.13.037,Queso fresco,2025-07-01,0.669
+1.1.4.13.037,Queso fresco,2025-08-01,0.931
+1.1.4.13.037,Queso fresco,2025-09-01,0.593
+1.1.4.13.037,Queso fresco,2025-10-01,0.497
+1.1.4.13.037,Queso fresco,2025-11-01,0.762
+1.1.4.13.037,Queso fresco,2025-12-01,0.000
+1.1.4.13.037,Queso fresco,2026-01-01,-0.061
+1.1.4.13.037,Queso fresco,2026-02-01,0.097
+1.1.4.13.037,Queso fresco,2026-03-01,-0.032
+1.1.4.13.037,Queso fresco,2026-04-01,-0.178
+1.1.4.13.037,Queso fresco,2026-05-01,-0.520
+1.1.4.13.037,Queso fresco,2026-06-01,-0.221
+1.1.4.13.037,Queso fresco,2026-07-01,0.058
+1.1.4.13.037,Queso fresco,2026-08-01,0.246
+1.1.4.13.037,Queso fresco,2026-09-01,-0.109
+1.1.4.13.038,Queso manchego y Chihuahua,2025-07-01,2.248
+1.1.4.13.038,Queso manchego y Chihuahua,2025-08-01,1.234
+1.1.4.13.038,Queso manchego y Chihuahua,2025-09-01,2.144
+1.1.4.13.038,Queso manchego y Chihuahua,2025-10-01,2.467
+1.1.4.13.038,Queso manchego y Chihuahua,2025-11-01,0.786
+1.1.4.13.038,Queso manchego y Chihuahua,2025-12-01,0.000
+1.1.4.13.038,Queso manchego y Chihuahua,2026-01-01,-0.828
+1.1.4.13.038,Queso manchego y Chihuahua,2026-02-01,-1.024
+1.1.4.13.038,Queso manchego y Chihuahua,2026-03-01,-1.676
+1.1.4.13.038,Queso manchego y Chihuahua,2026-04-01,-0.837
+1.1.4.13.038,Queso manchego y Chihuahua,2026-05-01,-1.406
+1.1.4.13.038,Queso manchego y Chihuahua,2026-06-01,0.150
+1.1.4.13.038,Queso manchego y Chihuahua,2026-07-01,-0.029
+1.1.4.13.038,Queso manchego y Chihuahua,2026-08-01,-0.165
+1.1.4.13.038,Queso manchego y Chihuahua,2026-09-01,-0.203
+1.1.4.13.039,Queso Oaxaca y asadero,2025-07-01,0.826
+1.1.4.13.039,Queso Oaxaca y asadero,2025-08-01,1.056
+1.1.4.13.039,Queso Oaxaca y asadero,2025-09-01,0.667
+1.1.4.13.039,Queso Oaxaca y asadero,2025-10-01,0.594
+1.1.4.13.039,Queso Oaxaca y asadero,2025-11-01,0.876
+1.1.4.13.039,Queso Oaxaca y asadero,2025-12-01,0.000
+1.1.4.13.039,Queso Oaxaca y asadero,2026-01-01,0.335
+1.1.4.13.039,Queso Oaxaca y asadero,2026-02-01,0.161
+1.1.4.13.039,Queso Oaxaca y asadero,2026-03-01,0.096
+1.1.4.13.039,Queso Oaxaca y asadero,2026-04-01,-0.169
+1.1.4.13.039,Queso Oaxaca y asadero,2026-05-01,0.738
+1.1.4.13.039,Queso Oaxaca y asadero,2026-06-01,1.023
+1.1.4.13.039,Queso Oaxaca y asadero,2026-07-01,1.664
+1.1.4.13.039,Queso Oaxaca y asadero,2026-08-01,1.366
+1.1.4.13.039,Queso Oaxaca y asadero,2026-09-01,1.073
+1.1.4.13.040,Otros quesos,2025-07-01,0.832
+1.1.4.13.040,Otros quesos,2025-08-01,0.436
+1.1.4.13.040,Otros quesos,2025-09-01,0.150
+1.1.4.13.040,Otros quesos,2025-10-01,0.803
+1.1.4.13.040,Otros quesos,2025-11-01,1.183
+1.1.4.13.040,Otros quesos,2025-12-01,0.000
+1.1.4.13.040,Otros quesos,2026-01-01,0.228
+1.1.4.13.040,Otros quesos,2026-02-01,0.247
+1.1.4.13.040,Otros quesos,2026-03-01,0.170
+1.1.4.13.040,Otros quesos,2026-04-01,0.217
+1.1.4.13.040,Otros quesos,2026-05-01,0.519
+1.1.4.13.040,Otros quesos,2026-06-01,0.592
+1.1.4.13.040,Otros quesos,2026-07-01,0.484
+1.1.4.13.040,Otros quesos,2026-08-01,0.441
+1.1.4.13.040,Otros quesos,2026-09-01,-0.006
+1.1.4.13.041,Yogurt,2025-07-01,0.457
+1.1.4.13.041,Yogurt,2025-08-01,0.272
+1.1.4.13.041,Yogurt,2025-09-01,0.507
+1.1.4.13.041,Yogurt,2025-10-01,0.526
+1.1.4.13.041,Yogurt,2025-11-01,0.111
+1.1.4.13.041,Yogurt,2025-12-01,0.000
+1.1.4.13.041,Yogurt,2026-01-01,0.079
+1.1.4.13.041,Yogurt,2026-02-01,-0.138
+1.1.4.13.041,Yogurt,2026-03-01,-1.310
+1.1.4.13.041,Yogurt,2026-04-01,-1.906
+1.1.4.13.041,Yogurt,2026-05-01,-1.878
+1.1.4.13.041,Yogurt,2026-06-01,-1.653
+1.1.4.13.041,Yogurt,2026-07-01,-1.624
+1.1.4.13.041,Yogurt,2026-08-01,-2.504
+1.1.4.13.041,Yogurt,2026-09-01,-2.204
+1.1.4.13.044,Mantequilla,2025-07-01,-2.555
+1.1.4.13.044,Mantequilla,2025-08-01,-1.898
+1.1.4.13.044,Mantequilla,2025-09-01,-1.614
+1.1.4.13.044,Mantequilla,2025-10-01,-2.272
+1.1.4.13.044,Mantequilla,2025-11-01,-0.917
+1.1.4.13.044,Mantequilla,2025-12-01,0.000
+1.1.4.13.044,Mantequilla,2026-01-01,-0.323
+1.1.4.13.044,Mantequilla,2026-02-01,-1.168
+1.1.4.13.044,Mantequilla,2026-03-01,-2.733
+1.1.4.13.044,Mantequilla,2026-04-01,-3.106
+1.1.4.13.044,Mantequilla,2026-05-01,-1.641
+1.1.4.13.044,Mantequilla,2026-06-01,-1.054
+1.1.4.13.044,Mantequilla,2026-07-01,-1.012
+1.1.4.13.044,Mantequilla,2026-08-01,-2.052
+1.1.4.13.044,Mantequilla,2026-09-01,-2.990
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2025-07-01,-3.119
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2025-08-01,-2.715
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2025-09-01,-1.071
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2025-10-01,-0.942
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2025-11-01,-0.172
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2025-12-01,0.000
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-01-01,0.518
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-02-01,-0.193
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-03-01,-0.490
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-04-01,0.417
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-05-01,0.366
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-06-01,0.611
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-07-01,0.683
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-08-01,-0.001
+1.1.4.13.086,"Helados, nieves y paletas de hielo",2026-09-01,0.031
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2025-07-01,2.467
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2025-08-01,2.304
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2025-09-01,1.014
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2025-10-01,0.585
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2025-11-01,0.690
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2025-12-01,0.000
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-01-01,0.363
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-02-01,0.334
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-03-01,0.724
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-04-01,0.971
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-05-01,0.604
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-06-01,0.391
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-07-01,1.394
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-08-01,1.644
+1.1.5.15.042,Aceites y grasas vegetales comestibles,2026-09-01,1.087
+1.1.6.18.079,Otras legumbres secas,2025-07-01,3.961
+1.1.6.18.079,Otras legumbres secas,2025-08-01,3.844
+1.1.6.18.079,Otras legumbres secas,2025-09-01,3.889
+1.1.6.18.079,Otras legumbres secas,2025-10-01,3.474
+1.1.6.18.079,Otras legumbres secas,2025-11-01,1.956
+1.1.6.18.079,Otras legumbres secas,2025-12-01,0.000
+1.1.6.18.079,Otras legumbres secas,2026-01-01,-0.994
+1.1.6.18.079,Otras legumbres secas,2026-02-01,-3.536
+1.1.6.18.079,Otras legumbres secas,2026-03-01,-5.087
+1.1.6.18.079,Otras legumbres secas,2026-04-01,-6.072
+1.1.6.18.079,Otras legumbres secas,2026-05-01,-6.079
+1.1.6.18.079,Otras legumbres secas,2026-06-01,-7.144
+1.1.6.18.079,Otras legumbres secas,2026-07-01,-7.952
+1.1.6.18.079,Otras legumbres secas,2026-08-01,-8.808
+1.1.6.18.079,Otras legumbres secas,2026-09-01,-9.184
+1.1.6.19.058,Otras conservas de frutas,2025-07-01,0.072
+1.1.6.19.058,Otras conservas de frutas,2025-08-01,0.268
+1.1.6.19.058,Otras conservas de frutas,2025-09-01,0.402
+1.1.6.19.058,Otras conservas de frutas,2025-10-01,0.092
+1.1.6.19.058,Otras conservas de frutas,2025-11-01,0.633
+1.1.6.19.058,Otras conservas de frutas,2025-12-01,0.000
+1.1.6.19.058,Otras conservas de frutas,2026-01-01,0.367
+1.1.6.19.058,Otras conservas de frutas,2026-02-01,0.846
+1.1.6.19.058,Otras conservas de frutas,2026-03-01,1.631
+1.1.6.19.058,Otras conservas de frutas,2026-04-01,2.233
+1.1.6.19.058,Otras conservas de frutas,2026-05-01,2.180
+1.1.6.19.058,Otras conservas de frutas,2026-06-01,2.677
+1.1.6.19.058,Otras conservas de frutas,2026-07-01,3.344
+1.1.6.19.058,Otras conservas de frutas,2026-08-01,3.755
+1.1.6.19.058,Otras conservas de frutas,2026-09-01,3.278
+1.1.6.19.066,Chiles envasados,2025-07-01,3.285
+1.1.6.19.066,Chiles envasados,2025-08-01,3.837
+1.1.6.19.066,Chiles envasados,2025-09-01,2.577
+1.1.6.19.066,Chiles envasados,2025-10-01,1.333
+1.1.6.19.066,Chiles envasados,2025-11-01,1.034
+1.1.6.19.066,Chiles envasados,2025-12-01,0.000
+1.1.6.19.066,Chiles envasados,2026-01-01,0.247
+1.1.6.19.066,Chiles envasados,2026-02-01,1.097
+1.1.6.19.066,Chiles envasados,2026-03-01,1.512
+1.1.6.19.066,Chiles envasados,2026-04-01,1.869
+1.1.6.19.066,Chiles envasados,2026-05-01,1.751
+1.1.6.19.066,Chiles envasados,2026-06-01,1.689
+1.1.6.19.066,Chiles envasados,2026-07-01,1.684
+1.1.6.19.066,Chiles envasados,2026-08-01,1.717
+1.1.6.19.066,Chiles envasados,2026-09-01,1.979
+1.1.6.19.069,Frijol procesado,2025-07-01,0.260
+1.1.6.19.069,Frijol procesado,2025-08-01,0.560
+1.1.6.19.069,Frijol procesado,2025-09-01,0.648
+1.1.6.19.069,Frijol procesado,2025-10-01,0.677
+1.1.6.19.069,Frijol procesado,2025-11-01,0.332
+1.1.6.19.069,Frijol procesado,2025-12-01,0.000
+1.1.6.19.069,Frijol procesado,2026-01-01,0.330
+1.1.6.19.069,Frijol procesado,2026-02-01,0.571
+1.1.6.19.069,Frijol procesado,2026-03-01,1.339
+1.1.6.19.069,Frijol procesado,2026-04-01,0.654
+1.1.6.19.069,Frijol procesado,2026-05-01,-0.034
+1.1.6.19.069,Frijol procesado,2026-06-01,0.355
+1.1.6.19.069,Frijol procesado,2026-07-01,0.344
+1.1.6.19.069,Frijol procesado,2026-08-01,0.510
+1.1.6.19.069,Frijol procesado,2026-09-01,-0.301
+1.1.6.19.077,Verduras envasadas,2025-07-01,1.341
+1.1.6.19.077,Verduras envasadas,2025-08-01,1.044
+1.1.6.19.077,Verduras envasadas,2025-09-01,-0.021
+1.1.6.19.077,Verduras envasadas,2025-10-01,-0.223
+1.1.6.19.077,Verduras envasadas,2025-11-01,0.051
+1.1.6.19.077,Verduras envasadas,2025-12-01,0.000
+1.1.6.19.077,Verduras envasadas,2026-01-01,0.438
+1.1.6.19.077,Verduras envasadas,2026-02-01,0.630
+1.1.6.19.077,Verduras envasadas,2026-03-01,-0.090
+1.1.6.19.077,Verduras envasadas,2026-04-01,0.294
+1.1.6.19.077,Verduras envasadas,2026-05-01,0.460
+1.1.6.19.077,Verduras envasadas,2026-06-01,-0.251
+1.1.6.19.077,Verduras envasadas,2026-07-01,-0.510
+1.1.6.19.077,Verduras envasadas,2026-08-01,-0.610
+1.1.6.19.077,Verduras envasadas,2026-09-01,-0.652
+1.1.6.19.092,Moles y salsas,2025-07-01,-0.930
+1.1.6.19.092,Moles y salsas,2025-08-01,-0.972
+1.1.6.19.092,Moles y salsas,2025-09-01,-0.451
+1.1.6.19.092,Moles y salsas,2025-10-01,-0.568
+1.1.6.19.092,Moles y salsas,2025-11-01,0.260
+1.1.6.19.092,Moles y salsas,2025-12-01,0.000
+1.1.6.19.092,Moles y salsas,2026-01-01,-0.320
+1.1.6.19.092,Moles y salsas,2026-02-01,-0.335
+1.1.6.19.092,Moles y salsas,2026-03-01,-0.516
+1.1.6.19.092,Moles y salsas,2026-04-01,-0.009
+1.1.6.19.092,Moles y salsas,2026-05-01,-0.116
+1.1.6.19.092,Moles y salsas,2026-06-01,0.347
+1.1.6.19.092,Moles y salsas,2026-07-01,0.369
+1.1.6.19.092,Moles y salsas,2026-08-01,0.009
+1.1.6.19.092,Moles y salsas,2026-09-01,0.598
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2025-07-01,0.039
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2025-08-01,1.159
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2025-09-01,0.845
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2025-10-01,0.169
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2025-11-01,0.125
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2025-12-01,0.000
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-01-01,-0.038
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-02-01,-0.178
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-03-01,0.630
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-04-01,0.094
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-05-01,0.019
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-06-01,-0.056
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-07-01,0.591
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-08-01,-0.514
+1.1.6.19.093,Sopas instantáneas y puré de tomate,2026-09-01,-0.127
+1.1.7.21.096,Café soluble,2025-07-01,-6.330
+1.1.7.21.096,Café soluble,2025-08-01,-4.557
+1.1.7.21.096,Café soluble,2025-09-01,-1.709
+1.1.7.21.096,Café soluble,2025-10-01,-1.229
+1.1.7.21.096,Café soluble,2025-11-01,-0.406
+1.1.7.21.096,Café soluble,2025-12-01,0.000
+1.1.7.21.096,Café soluble,2026-01-01,0.227
+1.1.7.21.096,Café soluble,2026-02-01,-0.096
+1.1.7.21.096,Café soluble,2026-03-01,0.122
+1.1.7.21.096,Café soluble,2026-04-01,0.122
+1.1.7.21.096,Café soluble,2026-05-01,0.371
+1.1.7.21.096,Café soluble,2026-06-01,1.091
+1.1.7.21.096,Café soluble,2026-07-01,0.953
+1.1.7.21.096,Café soluble,2026-08-01,0.979
+1.1.7.21.096,Café soluble,2026-09-01,0.633
+1.1.7.21.097,Café tostado,2025-07-01,-4.069
+1.1.7.21.097,Café tostado,2025-08-01,-3.166
+1.1.7.21.097,Café tostado,2025-09-01,-1.156
+1.1.7.21.097,Café tostado,2025-10-01,-0.516
+1.1.7.21.097,Café tostado,2025-11-01,0.281
+1.1.7.21.097,Café tostado,2025-12-01,0.000
+1.1.7.21.097,Café tostado,2026-01-01,-0.969
+1.1.7.21.097,Café tostado,2026-02-01,-1.196
+1.1.7.21.097,Café tostado,2026-03-01,-1.447
+1.1.7.21.097,Café tostado,2026-04-01,-1.599
+1.1.7.21.097,Café tostado,2026-05-01,-2.002
+1.1.7.21.097,Café tostado,2026-06-01,-2.597
+1.1.7.21.097,Café tostado,2026-07-01,-2.736
+1.1.7.21.097,Café tostado,2026-08-01,-2.515
+1.1.7.21.097,Café tostado,2026-09-01,-2.921
+1.1.7.21.098,Té,2025-07-01,-1.227
+1.1.7.21.098,Té,2025-08-01,-0.372
+1.1.7.21.098,Té,2025-09-01,-0.263
+1.1.7.21.098,Té,2025-10-01,-0.655
+1.1.7.21.098,Té,2025-11-01,-0.404
+1.1.7.21.098,Té,2025-12-01,0.000
+1.1.7.21.098,Té,2026-01-01,-0.159
+1.1.7.21.098,Té,2026-02-01,-0.498
+1.1.7.21.098,Té,2026-03-01,-0.272
+1.1.7.21.098,Té,2026-04-01,-0.163
+1.1.7.21.098,Té,2026-05-01,-0.189
+1.1.7.21.098,Té,2026-06-01,0.136
+1.1.7.21.098,Té,2026-07-01,-0.090
+1.1.7.21.098,Té,2026-08-01,-0.009
+1.1.7.21.098,Té,2026-09-01,0.641
+1.1.8.23.088,Concentrados de pollo y sal,2025-07-01,-0.512
+1.1.8.23.088,Concentrados de pollo y sal,2025-08-01,-0.208
+1.1.8.23.088,Concentrados de pollo y sal,2025-09-01,-0.782
+1.1.8.23.088,Concentrados de pollo y sal,2025-10-01,-0.794
+1.1.8.23.088,Concentrados de pollo y sal,2025-11-01,0.025
+1.1.8.23.088,Concentrados de pollo y sal,2025-12-01,0.000
+1.1.8.23.088,Concentrados de pollo y sal,2026-01-01,-0.136
+1.1.8.23.088,Concentrados de pollo y sal,2026-02-01,-0.133
+1.1.8.23.088,Concentrados de pollo y sal,2026-03-01,0.360
+1.1.8.23.088,Concentrados de pollo y sal,2026-04-01,0.619
+1.1.8.23.088,Concentrados de pollo y sal,2026-05-01,0.753
+1.1.8.23.088,Concentrados de pollo y sal,2026-06-01,0.494
+1.1.8.23.088,Concentrados de pollo y sal,2026-07-01,0.544
+1.1.8.23.088,Concentrados de pollo y sal,2026-08-01,0.933
+1.1.8.23.088,Concentrados de pollo y sal,2026-09-01,0.930
+1.1.8.23.091,Mayonesa y mostaza,2025-07-01,4.009
+1.1.8.23.091,Mayonesa y mostaza,2025-08-01,3.013
+1.1.8.23.091,Mayonesa y mostaza,2025-09-01,2.434
+1.1.8.23.091,Mayonesa y mostaza,2025-10-01,2.049
+1.1.8.23.091,Mayonesa y mostaza,2025-11-01,1.098
+1.1.8.23.091,Mayonesa y mostaza,2025-12-01,0.000
+1.1.8.23.091,Mayonesa y mostaza,2026-01-01,0.353
+1.1.8.23.091,Mayonesa y mostaza,2026-02-01,1.073
+1.1.8.23.091,Mayonesa y mostaza,2026-03-01,0.093
+1.1.8.23.091,Mayonesa y mostaza,2026-04-01,1.079
+1.1.8.23.091,Mayonesa y mostaza,2026-05-01,-0.653
+1.1.8.23.091,Mayonesa y mostaza,2026-06-01,-0.364
+1.1.8.23.091,Mayonesa y mostaza,2026-07-01,-1.009
+1.1.8.23.091,Mayonesa y mostaza,2026-08-01,-0.907
+1.1.8.23.091,Mayonesa y mostaza,2026-09-01,-0.091
+1.1.8.23.094,Otros condimentos,2025-07-01,-0.375
+1.1.8.23.094,Otros condimentos,2025-08-01,-1.017
+1.1.8.23.094,Otros condimentos,2025-09-01,0.294
+1.1.8.23.094,Otros condimentos,2025-10-01,0.201
+1.1.8.23.094,Otros condimentos,2025-11-01,0.083
+1.1.8.23.094,Otros condimentos,2025-12-01,0.000
+1.1.8.23.094,Otros condimentos,2026-01-01,-0.479
+1.1.8.23.094,Otros condimentos,2026-02-01,-0.348
+1.1.8.23.094,Otros condimentos,2026-03-01,0.052
+1.1.8.23.094,Otros condimentos,2026-04-01,0.329
+1.1.8.23.094,Otros condimentos,2026-05-01,0.335
+1.1.8.23.094,Otros condimentos,2026-06-01,0.719
+1.1.8.23.094,Otros condimentos,2026-07-01,1.014
+1.1.8.23.094,Otros condimentos,2026-08-01,1.188
+1.1.8.23.094,Otros condimentos,2026-09-01,0.948
+1.1.8.24.074,Papas fritas,2025-07-01,-2.167
+1.1.8.24.074,Papas fritas,2025-08-01,-0.716
+1.1.8.24.074,Papas fritas,2025-09-01,0.443
+1.1.8.24.074,Papas fritas,2025-10-01,0.528
+1.1.8.24.074,Papas fritas,2025-11-01,0.913
+1.1.8.24.074,Papas fritas,2025-12-01,0.000
+1.1.8.24.074,Papas fritas,2026-01-01,-0.341
+1.1.8.24.074,Papas fritas,2026-02-01,-0.406
+1.1.8.24.074,Papas fritas,2026-03-01,-0.219
+1.1.8.24.074,Papas fritas,2026-04-01,-0.421
+1.1.8.24.074,Papas fritas,2026-05-01,-0.554
+1.1.8.24.074,Papas fritas,2026-06-01,-0.908
+1.1.8.24.074,Papas fritas,2026-07-01,-1.013
+1.1.8.24.074,Papas fritas,2026-08-01,-0.913
+1.1.8.24.074,Papas fritas,2026-09-01,-0.156
+1.1.8.24.084,Chocolate y productos de confitería,2025-07-01,-2.146
+1.1.8.24.084,Chocolate y productos de confitería,2025-08-01,-1.575
+1.1.8.24.084,Chocolate y productos de confitería,2025-09-01,-1.022
+1.1.8.24.084,Chocolate y productos de confitería,2025-10-01,-0.421
+1.1.8.24.084,Chocolate y productos de confitería,2025-11-01,-0.292
+1.1.8.24.084,Chocolate y productos de confitería,2025-12-01,0.000
+1.1.8.24.084,Chocolate y productos de confitería,2026-01-01,0.495
+1.1.8.24.084,Chocolate y productos de confitería,2026-02-01,0.935
+1.1.8.24.084,Chocolate y productos de confitería,2026-03-01,1.301
+1.1.8.24.084,Chocolate y productos de confitería,2026-04-01,1.518
+1.1.8.24.084,Chocolate y productos de confitería,2026-05-01,1.146
+1.1.8.24.084,Chocolate y productos de confitería,2026-06-01,1.060
+1.1.8.24.084,Chocolate y productos de confitería,2026-07-01,1.194
+1.1.8.24.084,Chocolate y productos de confitería,2026-08-01,1.438
+1.1.8.24.084,Chocolate y productos de confitería,2026-09-01,1.305
+1.1.8.24.085,"Gelatina, miel y mermeladas",2025-07-01,-0.020
+1.1.8.24.085,"Gelatina, miel y mermeladas",2025-08-01,0.557
+1.1.8.24.085,"Gelatina, miel y mermeladas",2025-09-01,-0.405
+1.1.8.24.085,"Gelatina, miel y mermeladas",2025-10-01,-0.763
+1.1.8.24.085,"Gelatina, miel y mermeladas",2025-11-01,-0.307
+1.1.8.24.085,"Gelatina, miel y mermeladas",2025-12-01,0.000
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-01-01,0.061
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-02-01,0.033
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-03-01,-0.203
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-04-01,-0.153
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-05-01,0.233
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-06-01,0.188
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-07-01,0.548
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-08-01,-0.115
+1.1.8.24.085,"Gelatina, miel y mermeladas",2026-09-01,-0.150
+1.1.8.24.089,Gelatina en polvo,2025-07-01,2.010
+1.1.8.24.089,Gelatina en polvo,2025-08-01,1.738
+1.1.8.24.089,Gelatina en polvo,2025-09-01,1.514
+1.1.8.24.089,Gelatina en polvo,2025-10-01,0.229
+1.1.8.24.089,Gelatina en polvo,2025-11-01,0.569
+1.1.8.24.089,Gelatina en polvo,2025-12-01,0.000
+1.1.8.24.089,Gelatina en polvo,2026-01-01,0.371
+1.1.8.24.089,Gelatina en polvo,2026-02-01,0.521
+1.1.8.24.089,Gelatina en polvo,2026-03-01,2.923
+1.1.8.24.089,Gelatina en polvo,2026-04-01,1.933
+1.1.8.24.089,Gelatina en polvo,2026-05-01,2.446
+1.1.8.24.089,Gelatina en polvo,2026-06-01,2.011
+1.1.8.24.089,Gelatina en polvo,2026-07-01,2.420
+1.1.8.24.089,Gelatina en polvo,2026-08-01,3.127
+1.1.8.24.089,Gelatina en polvo,2026-09-01,1.609
+1.2.1.26.108,Cerveza,2025-07-01,-4.116
+1.2.1.26.108,Cerveza,2025-08-01,-2.915
+1.2.1.26.108,Cerveza,2025-09-01,-1.473
+1.2.1.26.108,Cerveza,2025-10-01,-0.977
+1.2.1.26.108,Cerveza,2025-11-01,-0.129
+1.2.1.26.108,Cerveza,2025-12-01,0.000
+1.2.1.26.108,Cerveza,2026-01-01,-0.289
+1.2.1.26.108,Cerveza,2026-02-01,-0.033
+1.2.1.26.108,Cerveza,2026-03-01,1.214
+1.2.1.26.108,Cerveza,2026-04-01,1.916
+1.2.1.26.108,Cerveza,2026-05-01,1.991
+1.2.1.26.108,Cerveza,2026-06-01,1.908
+1.2.1.26.108,Cerveza,2026-07-01,1.565
+1.2.1.26.108,Cerveza,2026-08-01,1.800
+1.2.1.26.108,Cerveza,2026-09-01,1.588
+1.2.1.27.103,Brandy,2025-07-01,-1.950
+1.2.1.27.103,Brandy,2025-08-01,-3.247
+1.2.1.27.103,Brandy,2025-09-01,-3.951
+1.2.1.27.103,Brandy,2025-10-01,-0.524
+1.2.1.27.103,Brandy,2025-11-01,-5.203
+1.2.1.27.103,Brandy,2025-12-01,0.000
+1.2.1.27.103,Brandy,2026-01-01,0.516
+1.2.1.27.103,Brandy,2026-02-01,0.825
+1.2.1.27.103,Brandy,2026-03-01,0.656
+1.2.1.27.103,Brandy,2026-04-01,0.297
+1.2.1.27.103,Brandy,2026-05-01,-2.770
+1.2.1.27.103,Brandy,2026-06-01,0.070
+1.2.1.27.103,Brandy,2026-07-01,0.958
+1.2.1.27.103,Brandy,2026-08-01,1.685
+1.2.1.27.103,Brandy,2026-09-01,2.095
+1.2.1.27.104,Ron,2025-07-01,2.175
+1.2.1.27.104,Ron,2025-08-01,0.779
+1.2.1.27.104,Ron,2025-09-01,1.024
+1.2.1.27.104,Ron,2025-10-01,-0.536
+1.2.1.27.104,Ron,2025-11-01,-4.030
+1.2.1.27.104,Ron,2025-12-01,0.000
+1.2.1.27.104,Ron,2026-01-01,0.805
+1.2.1.27.104,Ron,2026-02-01,1.726
+1.2.1.27.104,Ron,2026-03-01,1.684
+1.2.1.27.104,Ron,2026-04-01,0.124
+1.2.1.27.104,Ron,2026-05-01,0.369
+1.2.1.27.104,Ron,2026-06-01,1.379
+1.2.1.27.104,Ron,2026-07-01,0.958
+1.2.1.27.104,Ron,2026-08-01,0.899
+1.2.1.27.104,Ron,2026-09-01,1.563
+1.2.1.27.105,Tequila,2025-07-01,1.171
+1.2.1.27.105,Tequila,2025-08-01,1.651
+1.2.1.27.105,Tequila,2025-09-01,-0.661
+1.2.1.27.105,Tequila,2025-10-01,0.673
+1.2.1.27.105,Tequila,2025-11-01,-2.293
+1.2.1.27.105,Tequila,2025-12-01,0.000
+1.2.1.27.105,Tequila,2026-01-01,-0.056
+1.2.1.27.105,Tequila,2026-02-01,-0.907
+1.2.1.27.105,Tequila,2026-03-01,-1.065
+1.2.1.27.105,Tequila,2026-04-01,-0.816
+1.2.1.27.105,Tequila,2026-05-01,-3.140
+1.2.1.27.105,Tequila,2026-06-01,-3.422
+1.2.1.27.105,Tequila,2026-07-01,-3.624
+1.2.1.27.105,Tequila,2026-08-01,-1.967
+1.2.1.27.105,Tequila,2026-09-01,-2.637
+1.2.1.27.106,Otros licores,2025-07-01,1.790
+1.2.1.27.106,Otros licores,2025-08-01,0.934
+1.2.1.27.106,Otros licores,2025-09-01,0.183
+1.2.1.27.106,Otros licores,2025-10-01,0.877
+1.2.1.27.106,Otros licores,2025-11-01,-2.468
+1.2.1.27.106,Otros licores,2025-12-01,0.000
+1.2.1.27.106,Otros licores,2026-01-01,1.230
+1.2.1.27.106,Otros licores,2026-02-01,1.350
+1.2.1.27.106,Otros licores,2026-03-01,2.634
+1.2.1.27.106,Otros licores,2026-04-01,2.647
+1.2.1.27.106,Otros licores,2026-05-01,0.138
+1.2.1.27.106,Otros licores,2026-06-01,-0.438
+1.2.1.27.106,Otros licores,2026-07-01,-0.472
+1.2.1.27.106,Otros licores,2026-08-01,1.217
+1.2.1.27.106,Otros licores,2026-09-01,0.761
+1.2.1.27.107,Vino de mesa,2025-07-01,0.484
+1.2.1.27.107,Vino de mesa,2025-08-01,-0.760
+1.2.1.27.107,Vino de mesa,2025-09-01,-2.510
+1.2.1.27.107,Vino de mesa,2025-10-01,-0.674
+1.2.1.27.107,Vino de mesa,2025-11-01,-5.200
+1.2.1.27.107,Vino de mesa,2025-12-01,0.000
+1.2.1.27.107,Vino de mesa,2026-01-01,0.351
+1.2.1.27.107,Vino de mesa,2026-02-01,0.784
+1.2.1.27.107,Vino de mesa,2026-03-01,1.495
+1.2.1.27.107,Vino de mesa,2026-04-01,0.423
+1.2.1.27.107,Vino de mesa,2026-05-01,-2.864
+1.2.1.27.107,Vino de mesa,2026-06-01,-0.785
+1.2.1.27.107,Vino de mesa,2026-07-01,0.954
+1.2.1.27.107,Vino de mesa,2026-08-01,2.280
+1.2.1.27.107,Vino de mesa,2026-09-01,2.827

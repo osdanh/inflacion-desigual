@@ -47,6 +47,11 @@ def opciones_frontera():
     return {titulo: {k: k for k in D.FR_CON_MESES if D.FR_CLASE[k] == clase} for clase, titulo in grupos.items()}
 
 
+def opciones_impuestos():
+    """Productos y canastas del experimento de los impuestos, con las comprobaciones aparte."""
+    return {grupo: {k: k for k in canastas} for grupo, canastas in D.IM_GRUPOS.items()}
+
+
 def tarjeta(etiqueta, valor, nota="", clase=""):
     return ui.div(ui.div(etiqueta, class_="tj-etiqueta"), ui.div(valor, class_=f"tj-valor {clase}"),
                   ui.div(nota, class_="tj-nota"), class_="tarjeta")
@@ -101,6 +106,33 @@ panel_porque = ui.nav_panel(
             grafica("Qué explica la brecha acumulada", "pq_acumulada"),
             grafica("Productos que más abren y más cierran la brecha", "pq_productos"),
             col_widths=(5, 7)),
+    ))
+
+panel_impuestos = ui.nav_panel(
+    "Un experimento: refrescos y cigarros",
+    ui.layout_sidebar(
+        ui.sidebar(
+            ui.input_select("im_producto", "Producto", opciones_impuestos()),
+            ui.p(ui.tags.b("Qué pasó: "), "desde el 1 de enero de 2026 el IEPS de las bebidas con azúcar pasó de 1.65 a 3.08 "
+                 "pesos por litro (las que solo llevan edulcorante pagan ahora 1.50) y el de los cigarros, de 160 a 200 % más "
+                 "una cuota mayor por cigarro.", class_="ayuda"),
+            ui.p(ui.tags.b("Cómo se mide: "), f"el precio de cada producto contra el de {D.IM_COMPARACION} alimentos y bebidas "
+                 "que no cambiaron de impuesto, en la misma entidad y el mismo mes, y el enero de 2026 contra los eneros de "
+                 "2021 a 2025, cuando la cuota solo se actualizó con la inflación.", class_="ayuda"),
+            ui.p(ui.tags.b("Qué tan seguro: "), "la cuenta se repite con cada producto de comparación como si hubiera pagado "
+                 "el impuesto, y con cada enero anterior.", class_="ayuda"),
+            ui.p(ui.tags.b("Por qué producto por producto: "), "dentro de una ciudad todos los hogares pagan el mismo precio; "
+                 "el impuesto llega distinto a cada decil solo por lo que compra.", class_="ayuda"),
+            width=320),
+        ui.output_ui("im_tarjetas"),
+        ui.card(ui.card_header(ui.output_text("im_titulo")), ui.output_ui("im_eventos"), ui.output_ui("im_nota_eventos")),
+        ui.card(ui.card_header("Cuánto subió el costo de la canasta de cada decil"), ui.output_ui("im_incidencia"),
+                ui.output_ui("im_nota_incidencia")),
+        ui.layout_columns(
+            ui.card(ui.card_header(ui.output_text("im_titulo_eneros")), ui.output_ui("im_eneros"), ui.output_ui("im_nota_eneros")),
+            ui.card(ui.card_header("¿Y si se compara el índice de cada decil?"), ui.output_ui("im_directo"),
+                    ui.output_ui("im_nota_directo")),
+            col_widths=(6, 6)),
     ))
 
 panel_entidad = ui.nav_panel(
@@ -198,6 +230,8 @@ efecto canasta y un efecto lugar.
 - **Canastas:** Encuesta Nacional de Ingresos y Gastos de los Hogares (ENIGH, INEGI) 2022 y 2018: gasto
   monetario de cada hogar por producto, más el alquiler estimado de la vivienda propia.
 - **Mapa:** Marco Geoestadístico de INEGI (diciembre de 2025), simplificado.
+- **Impuestos:** decreto que reforma la Ley del IEPS (Diario Oficial de la Federación, 7 de noviembre de 2025) y
+  acuerdo de la SHCP con las cuotas de 2026 (22 de diciembre de 2025).
 
 ### Cómo se calcula
 
@@ -217,9 +251,47 @@ La diferencia de inflación entre dos grupos se parte de forma exacta en dos:
 - **Canasta:** compran productos distintos, y unos suben más que otros.
 - **Lugar:** el mismo producto sube distinto en las entidades donde vive cada grupo.
 
+### Un experimento: refrescos y cigarros
+
+Lo anterior describe; las pestañas de experimentos buscan efectos. Desde el 1 de enero de 2026, el IEPS de las
+bebidas saborizadas con azúcares añadidos pasó de 1.6451 a 3.0818 pesos por litro, las que solo llevan
+edulcorantes empezaron a pagar 1.50, y el de los cigarros subió de 160 a 200 % más una cuota por cigarro de
+0.6445 a 0.8516 pesos. Dentro de una ciudad todos los hogares pagan el mismo precio por producto, así que el
+impuesto solo puede llegar distinto a cada decil por lo que compra: primero se mide cuánto subió cada precio y
+después se reparte con la canasta de cada decil.
+
+- **Comparación:** con y = 100 × log del índice de precios de la entidad, el producto y el mes, se toma el cambio
+  de cada mes contra diciembre del año anterior. Primero se le resta el de 58 alimentos y bebidas que no
+  cambiaron de impuesto (en la misma entidad y mes), y después lo normal de esa diferencia en los eneros de 2021
+  a 2025. Es una triple diferencia (producto × año × mes), igual al coeficiente de una regresión con efectos
+  fijos de entidad × mes. No hace falta un instrumento: el impuesto es el choque, y lo que se mide es su efecto
+  directo en los precios.
+- **Eneros normales:** cada enero las cuotas se actualizan con la inflación y muchos precios se ajustan; eso se
+  quita comparando con los eneros de 2021 a 2025. Quedan fuera 2019 (el IVA de la frontera bajó a 8 %, y los
+  refrescos y cigarros pagan IVA y casi ningún alimento) y 2020 (la cuota de los cigarros saltó de 0.35 a 0.4944
+  pesos; el cálculo lo detecta: +4.3 %).
+- **Placebos:** con un solo enero tratado no hay un error estándar confiable. La prueba es repetir la cuenta con
+  cada producto de comparación como si hubiera pagado el impuesto (y con canastas al azar de ellos), y con cada
+  enero anterior.
+- **Traslado:** si todo el impuesto llega al consumidor, el litro de refresco sube 1.16 × (3.0818 − 1.6451 ×
+  1.036) pesos respecto a un enero normal: 8.6 % del precio por litro, que sale de la ENIGH (gasto entre litros).
+  En los cigarros, con cajetillas de 60 a 100 pesos, 17 a 19 %.
+- **Hogares:** el efecto de cada producto se pondera con su peso en la canasta de cada decil (ENIGH 2022
+  calibrada, a precios de diciembre de 2025). El intervalo sale de sumarle a cada efecto el ruido de los placebos.
+- **Por qué no comparar directamente el índice de cada decil:** ese índice junta el impuesto con todo lo que pasó
+  ese mes. En enero de 2026 los pecuarios bajaron más en la canasta del decil I y tapan parte del efecto.
+- **Límites:** los refrescos subieron cerca de 0.8 % en diciembre de 2025, antes del impuesto (anticipación); los
+  cigarros ya venían subiendo más que lo normal desde julio de 2025 y, sin esa tendencia, su efecto baja de 14.5 a
+  9.7 %. El azúcar subió en diciembre, pero los dulces y panes, que llevan mucha azúcar y no pagan la cuota, no se
+  movieron. La incidencia no cuenta que los hogares compren menos por el impuesto, y el precio por litro de la
+  ENIGH mezcla presentaciones distintas a las que sigue el INPC.
+
+Con el impuesto de 2014 (un peso por litro), los precios de los refrescos subieron un poco más que el impuesto
+(Colchero y otros, 2015, *PLoS ONE*).
+
 ### Un experimento: la frontera norte
 
-Lo anterior describe. La pestaña de la frontera busca un efecto: el 1 de enero de 2019 entró en vigor el
+La pestaña de la frontera mide otro efecto: el 1 de enero de 2019 entró en vigor el
 Decreto de estímulos fiscales región fronteriza norte (Diario Oficial de la Federación, 31 de diciembre de
 2018) en 43 municipios de seis estados. El IVA bajó de 16 a 8 % y el ISR de las empresas de la zona, un
 tercio; el mismo día su salario mínimo se duplicó. Baja California entera está en la zona, y con ella las
@@ -267,7 +339,7 @@ Cálculos propios con datos de INEGI.
 panel_metodo = ui.nav_panel("Método", ui.div(ui.markdown(METODO), class_="metodo"))
 
 app_ui = ui.page_navbar(
-    panel_ingreso, panel_porque, panel_entidad, panel_frontera, panel_tu, panel_metodo,
+    panel_ingreso, panel_porque, panel_impuestos, panel_entidad, panel_frontera, panel_tu, panel_metodo,
     title="¿De quién es la inflación?",
     id="pestana",
     header=ui.head_content(ui.tags.script(src="plotly.min.js"), ui.include_css(AQUI / "www" / "estilos.css")),
@@ -517,6 +589,128 @@ def server(input, output, session):
                     f"el decil X y el I ({dif['efecto']:+.1f} puntos) viene de la gasolina y no se distingue de lo que pasa en "
                     f"las entidades sin la política (p = {dif['valor_p']:.2f}). No cuenta lo que el salario mínimo hizo con los "
                     "ingresos.", class_="nota-grafica")
+
+    # ------------------------------------------------------------ un experimento: refrescos y cigarros
+    @reactive.calc
+    def im():
+        k = input.im_producto()
+        return {"canasta": k, "medidas": D.im_resumen[D.im_resumen["canasta"] == k].set_index("medida"),
+                "comprobacion": k in D.IM_COMPROBACIONES, "esperado": D.im_esperado(k)}
+
+    @render.ui
+    def im_tarjetas():
+        x = im()
+        m = x["medidas"]
+        uno = m.loc[D.IM_PRINCIPAL]
+        t = x["esperado"]
+        if x["comprobacion"]:
+            tercera = tarjeta("Impuesto de este producto", "Sin cambio", "si se mueve, no es por la cuota nueva")
+        elif t is not None:
+            completo = (t["esperado_min"] + t["esperado_max"]) / 2
+            rango = (f"{t['esperado_min']:.0f} a {t['esperado_max']:.0f} %" if t["esperado_max"] - t["esperado_min"] > 0.5
+                     else f"{completo:.1f} %")
+            tercera = tarjeta("Llegó al precio", f"{100 * uno['efecto'] / completo:.0f} %",
+                              f"del impuesto completo, que subiría el precio {rango}")
+        else:
+            tercera = tarjeta("Sin impuesto nuevo", f"{uno['placebo_p05']:+.1f} a {uno['placebo_p95']:+.1f} %",
+                              "donde caen nueve de cada diez productos de comparación")
+        n = int(uno["n_placebos"])
+        if n == D.IM_COMPARACION:                                     # un producto: lugar entre los de comparación
+            lugar = int(uno["lugar"])
+            texto = ("ninguno sin impuesto nuevo subió tanto" if lugar == 1
+                     else f"{lugar - 1} sin impuesto nuevo subieron más")
+            cuarta = tarjeta(f"Lugar entre {n + 1} productos", f"{lugar}", f"{texto} (p = {uno['valor_p']:.2f})")
+        else:                                                         # canasta: contra canastas al azar
+            p = uno["valor_p"]
+            cuarta = tarjeta("Contra canastas al azar", "p < 0.001" if p < 0.001 else f"p = {p:.2f}",
+                             f"{n:,} canastas de productos sin impuesto nuevo, con los mismos pesos")
+        return ui.div(tarjeta("En 2026", pct(uno["efecto"], True), "enero a septiembre, contra un enero normal", "guinda"),
+                      tarjeta("En septiembre", pct(m.loc["sep-2026", "efecto"], True), "contra diciembre de 2025"),
+                      tercera, cuarta, class_="tarjetas")
+
+    @render.text
+    def im_titulo():
+        return f"{im()['canasta']}: precio contra {D.IM_COMPARACION} alimentos y bebidas sin impuesto nuevo"
+
+    @render.ui
+    def im_eventos():
+        x = im()
+        t, referencia = x["esperado"], None
+        if t is not None:
+            v = (t["esperado_min"] + t["esperado_max"]) / 2
+            referencia = (v, f"Si todo el impuesto llegara al precio: {v:+.1f} %")
+        return ui.HTML(F.html(F.impuestos_eventos(D.im_trayectoria(x["canasta"]), D.im_placebos_ancha, D.IM_INICIO,
+                                                  x["canasta"], referencia)))
+
+    @render.ui
+    def im_nota_eventos():
+        k = im()["canasta"]
+        m = im()["medidas"]
+        texto = ("Diferencia contra los productos de comparación, después de quitar lo que el producto se mueve en un enero "
+                 "normal; diciembre de 2025 es el punto de partida. Cada línea gris es un producto de comparación contra los "
+                 "demás: lo que se mueve la cuenta donde no hubo impuesto nuevo.")
+        extra = {
+            "Refrescos": f" En diciembre, antes del impuesto, ya subieron {m.loc['dic-2025', 'efecto']:.1f} % más que lo normal "
+                         f"(anticipación); contando desde noviembre, el efecto es {m.loc['ene-sep 2026 contra nov-2025', 'efecto']:+.1f} %.",
+            "Cigarros": f" Desde julio de 2025 ya subían más que lo normal; si esa tendencia hubiera seguido, el efecto sería "
+                        f"{m.loc['ene-sep 2026 sin tendencia previa', 'efecto']:+.1f} % en lugar de {m.loc[D.IM_PRINCIPAL, 'efecto']:+.1f} %.",
+            "Azúcar (no paga)": " El azúcar no paga la cuota y subió en diciembre de 2025, antes del impuesto. Los dulces y panes, "
+                                "que llevan mucha azúcar, no se movieron: el salto de los refrescos no parece venir del costo del azúcar.",
+            "Concentrados para refrescos": " Pagan por cada litro de bebida que rinden: en un sobre barato, la cuota pesa mucho.",
+        }
+        return ui.p(texto + extra.get(k, ""), class_="nota-grafica")
+
+    @render.ui
+    def im_incidencia():
+        inc = D.im_incidencia.set_index("nivel").loc[D.ROMANOS[1:]].reset_index()
+        return ui.HTML(F.html(F.impuestos_incidencia(inc)))
+
+    @render.ui
+    def im_nota_incidencia():
+        t = D.im_incidencia.set_index("nivel")
+        g = t.loc["Decil I menos decil X"]
+        return ui.p(f"Efecto promedio de enero a septiembre de 2026 de las bebidas y los cigarros con impuesto nuevo en el costo de "
+                    f"la canasta de cada decil (ENIGH 2022 calibrada, a precios de diciembre de 2025). Todos los hogares: "
+                    f"{t.loc['Todos', 'efecto']:+.2f} %. Como parte de su gasto, el decil I paga {g['razon']:.1f} veces lo del X "
+                    f"({g['efecto']:+.2f} puntos de diferencia; de {g['efecto_p05']:.2f} a {g['efecto_p95']:.2f} con el ruido de los "
+                    f"placebos). En pesos es al revés: {t.loc['I', 'pesos_mes']:.0f} pesos más al mes por hogar en el decil I y "
+                    f"{t.loc['X', 'pesos_mes']:.0f} en el X. La diferencia entre deciles viene de los refrescos; los cigarros pesan "
+                    f"parecido en todos. El litro de refresco cuesta casi lo mismo en todos los deciles ({t.loc['I', 'precio_litro']:.1f} "
+                    f"pesos en el I y {t.loc['X', 'precio_litro']:.1f} en el X), así que una cuota por litro no agrega desigualdad "
+                    "por ese lado. No cuenta que los hogares compren menos por el impuesto.", class_="nota-grafica")
+
+    @render.text
+    def im_titulo_eneros():
+        return f"{im()['canasta']}: cada enero contra lo normal"
+
+    @render.ui
+    def im_eneros():
+        k = im()["canasta"]
+        e = D.im_eneros[D.im_eneros["canasta"] == k].dropna(subset=["efecto"])
+        especial = (2020, "2020: subió la cuota del cigarro") if k in ("Cigarros", "Bebidas y cigarros") else None
+        return ui.HTML(F.html(F.impuestos_eneros(e, especial)))
+
+    @render.ui
+    def im_nota_eneros():
+        texto = ("El mismo cálculo con cada enero desde 2019, como si en él hubiera entrado el impuesto. La referencia son los "
+                 "eneros de 2021 a 2025; quedan fuera 2019, por el IVA de la frontera, y 2020, porque la cuota de los cigarros "
+                 "saltó de 0.35 a 0.49 pesos (y el cálculo lo detecta).")
+        if im()["canasta"] == "Bebidas energéticas":
+            texto += " Las bebidas energéticas entraron al INPC en 2024: solo tienen el enero de 2025 para comparar."
+        return ui.p(texto, class_="nota-grafica")
+
+    @render.ui
+    def im_directo():
+        return ui.HTML(F.html(F.impuestos_directo(D.im_directo)))
+
+    @render.ui
+    def im_nota_directo():
+        d = D.im_directo.set_index("decil").loc["I menos X"]
+        return ui.p(f"Enero de 2026 contra los eneros de 2021 a 2025 en el índice de cada decil (el rombo), repartido por tipo "
+                    f"de producto. El índice del decil junta el impuesto con todo lo que pasó ese enero: comparado así, el decil "
+                    f"I contra el X da {d['directo']:+.2f} puntos, cuando el impuesto aporta {d['Pagaron más impuesto']:+.2f}; los "
+                    "pecuarios bajaron más en la canasta del decil I y tapan parte del efecto. Por eso el efecto se mide producto "
+                    "por producto y después se reparte con la canasta de cada decil.", class_="nota-grafica")
 
     # ------------------------------------------------------------ tu inflación
     @reactive.effect

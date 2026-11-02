@@ -10,6 +10,9 @@ Proyecto de Visualización de Datos, 2026. Oscar Daniel Hernández Romero y Kevi
 
 - **Por ingreso:** inflación de cada decil de ingreso y la brecha entre el decil I y el X.
 - **¿Por qué?:** la brecha repartida entre canasta y lugar, mes a mes y producto por producto.
+- **Un experimento: refrescos y cigarros:** cuánto subieron los precios con el aumento del IEPS de enero de
+  2026, comparados con productos que no cambiaron de impuesto y con los eneros anteriores, y cuánto le cuesta
+  a cada decil de ingreso.
 - **Por entidad:** mapa, comparación de las 32 entidades y su evolución.
 - **Un experimento: la frontera:** qué pasó con los precios de Baja California cuando el IVA de la frontera
   norte bajó de 16 a 8 % en enero de 2019, por tipo de producto, por estado fronterizo y por nivel de ingreso.
@@ -37,3 +40,5 @@ Cálculos propios con datos de INEGI: Índice Nacional de Precios al Consumidor 
 genérico, Encuesta Nacional de Ingresos y Gastos de los Hogares 2018 y 2022, y Marco Geoestadístico.
 La zona de la pestaña de la frontera es la del Decreto de estímulos fiscales región fronteriza norte
 (Diario Oficial de la Federación, 31 de diciembre de 2018).
+Las cuotas del IEPS de la pestaña de refrescos y cigarros son las del decreto que reforma la Ley del IEPS
+(Diario Oficial de la Federación, 7 de noviembre de 2025) y del acuerdo de la SHCP del 22 de diciembre de 2025.
