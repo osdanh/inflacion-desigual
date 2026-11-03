@@ -170,8 +170,6 @@ panel_mayoreo = ui.nav_panel(
             col_widths=(6, 6)),
         ui.card(ui.card_header("La brecha de inflación anual entre el decil I y el X, y lo que predice el mayoreo"),
                 ui.output_ui("my_historia"), ui.output_ui("my_nota_historia")),
-        ui.card(ui.card_header("¿Y la sequía? Qué pasa con los precios cuando aumenta en los estados que surten a la Central de Abasto"),
-                ui.output_ui("my_sequia"), ui.output_ui("my_nota_sequia")),
         ui.card(ui.card_header(ui.output_text("my_titulo_productos")), ui.output_ui("my_productos"),
                 ui.p("Cada punto es una fruta o verdura; su tamaño, su peso en el INPC. A la derecha, las que pesan más en el gasto "
                      "del decil I que en el del X; arriba, las que más trasladan del mayoreo al consumidor en el mes elegido. El "
@@ -366,8 +364,11 @@ consumidor, en cuántos meses y a qué decil.
   de la Central de Abasto.
 - **Sequía:** del Monitor de Sequía de México (Conagua, base de municipios, quincenal) sale un índice de 0 a 5 por
   estado y mes. Cada producto se expone a la sequía de los estados de donde llegaba a la Central de Abasto en ese
-  mes del año entre 2012 y 2017 (un instrumento de participaciones fijas). Se usa de dos formas: la respuesta de
-  los precios a la sequía (forma reducida) y el traslado con la sequía como instrumento del salto al mayoreo.
+  mes del año entre 2012 y 2017 (un instrumento de participaciones fijas). Se usa como instrumento del salto al
+  mayoreo, para comprobar el traslado. Su efecto directo es raro pero robusto: en los dos primeros meses un punto más
+  de sequía baja el precio (mayoreo 6 a 7 %, consumidor 4 a 6 %), quizá porque se cosecha y se vende antes; un año
+  después lo sube. No explica los saltos de 2024. Con el maíz blanco pasa algo parecido: la sequía de los estados
+  productores (Sinaloa en 2023 y 2024) lo sube poco y no explica que se separara del maíz de Estados Unidos.
 - **Límites:** la sequía es un instrumento en el límite (F de 13 a 14; cerca de 30 sin 2020 y 2021), por eso se usan
   conjuntos de Anderson-Rubin, y su efecto inmediato es bajar el precio, no subirlo;
   el índice no pondera por superficie sembrada ni distingue el riego. El mayoreo es solo el de la Ciudad de
@@ -924,25 +925,6 @@ def server(input, output, session):
                     f"producto (punteada). Correlación entre estas dos: {D.MY_AJUSTE:.2f}. La subida de 2024 y la caída de 2025 "
                     "vienen de la Central de Abasto; los saltos de la brecha en 2020 y en 2022 a 2023 vienen de otros productos. "
                     "El traslado se estima con los mismos datos.", class_="nota-grafica")
-
-    @render.ui
-    def my_sequia():
-        return ui.HTML(F.html(F.mayoreo_sequia(D.my_sequia, D.MY_H_SEQUIA)))
-
-    @render.ui
-    def my_nota_sequia():
-        s = D.my_sequia.set_index(["serie", "h"])["b"]
-        a = D.my_sequia_anual.set_index(["serie", "rezago"])
-        return ui.p("Respuesta a un punto más de sequía (índice de 0 a 5, promedio de los municipios) en los estados de donde "
-                    "suele venir cada producto, según el SNIIM de 2012 a 2017; entre mayo de 2023 y mayo de 2024 esa exposición "
-                    f"subió 1.6 puntos. En los dos primeros meses el mayoreo baja {abs(s[('mayoreo', 0)]):.0f} a "
-                    f"{abs(s[('mayoreo', 1)]):.0f} % y el consumidor {abs(s[('consumidor', 0)]):.0f} a "
-                    f"{abs(s[('consumidor', 1)]):.0f} %. Una explicación posible: con sequía se cosecha y se vende antes, y no "
-                    "hay lluvias que dañen lo sembrado. En cambios anuales, un año después el mayoreo sube "
-                    f"{a.loc[('mayoreo', 12), 'b']:.0f} % (quizá porque se siembra menos), pero mes a mes eso no es estable. "
-                    "La sequía no explica los saltos de precio como un choque inmediato; los de 2024 tendrían que venir de "
-                    "otra cosa (calor, lluvias, lo que se dejó de sembrar), que con estos datos no se puede separar.",
-                    class_="nota-grafica")
 
     @render.text
     def my_titulo_productos():
