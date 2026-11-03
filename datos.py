@@ -175,6 +175,11 @@ my_ar = leer("mayoreo_sequia_ar.csv")
 MY_REZAGOS = int(my_traslado["rezagos"].iat[0])
 MY_DESDE = pd.Timestamp(my_traslado["desde"].iat[0])
 
+# --- el maíz blanco y la tortilla (explorar_maiz_blanco.py), en «¿Por qué?» --------------------------------------
+mz_historia = leer("maiz_historia.csv", parse_dates=["mes"])        # 100 x log, desde julio de 2018
+mz_traslado = leer("maiz_traslado.csv").set_index("h")
+mz_resumen = leer("maiz_resumen.csv").set_index("serie").loc["tortilla"]
+
 
 def im_trayectoria(canasta):
     """Efecto mensual de una canasta (%), julio de 2025 a septiembre de 2026; diciembre de 2025 = 0."""

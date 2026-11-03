@@ -115,6 +115,8 @@ panel_porque = ui.nav_panel(
             grafica("Qué explica la brecha acumulada", "pq_acumulada"),
             grafica("Productos que más abren y más cierran la brecha", "pq_productos"),
             col_widths=(5, 7)),
+        ui.card(ui.card_header("La tortilla siguió al maíz blanco nacional, no al maíz de Estados Unidos"),
+                ui.output_ui("pq_maiz"), ui.output_ui("pq_nota_maiz")),
     ))
 
 panel_impuestos = ui.nav_panel(
@@ -371,6 +373,25 @@ consumidor, en cuántos meses y a qué decil.
   el índice no pondera por superficie sembrada ni distingue el riego. El mayoreo es solo el de la Ciudad de
   México, los pecuarios no están y el traslado de la historia se estima con los mismos datos.
 
+### El maíz blanco y la tortilla («¿Por qué?»)
+
+La tortilla subió mucho más que el maíz que se cotiza en el mundo. Para ver si el costo que faltaba es el maíz
+blanco nacional, con el que se hace la tortilla:
+
+- **Datos:** precios semanales al mayoreo del maíz blanco del SNIIM (granos básicos; 35 mil cotizaciones de 42
+  centrales de abasto y 29 estados de origen, 2006 a 2026). El índice sale de una regresión del precio de cada par
+  origen-destino contra efectos fijos de par y de mes. Al consumidor, el INPC nacional de la tortilla de maíz desde
+  2006; el maíz de Estados Unidos es el del Banco Mundial por el tipo de cambio de la Reserva Federal.
+- **Traslado:** proyecciones locales de la tortilla contra el cambio mensual del maíz blanco, con doce rezagos de
+  ambos y del INPC general, el salario mínimo y el mes del año (errores de Newey y West). El traslado acumulado es
+  la respuesta de la tortilla entre la del propio maíz al mismo horizonte. Comprobación causal: el mismo cálculo con
+  el precio del maíz de Estados Unidos en dólares como instrumento (F de la primera etapa de 8 a 14 entre 6 y 24
+  meses), que mueve al maíz blanco por el mercado mundial y no por los demás costos de las tortillerías.
+- **La cuenta:** con rezagos distribuidos de 0 a 24 meses, la tortilla esperada es el INPC general más el traslado
+  por lo que el maíz blanco subió por encima del INPC.
+- **Límites:** entre estados, con efectos de mes, el maíz local no mueve a la tortilla local (el mercado es nacional
+  y las cotizaciones locales son ruidosas). El salario mínimo no muestra efecto, pero esa prueba es débil.
+
 ### Un experimento: la frontera norte
 
 La pestaña de la frontera mide otro efecto: el 1 de enero de 2019 entró en vigor el
@@ -501,6 +522,30 @@ def server(input, output, session):
                         class_="ayuda")
         n = D.brecha_nodos[(D.brecha_nodos["inicio"] == p["inicio"]) & (D.brecha_nodos["fin"] == p["fin"])]
         return ui.HTML(F.html(F.productos(n)))
+
+    @render.ui
+    def pq_maiz():
+        return ui.HTML(F.html(F.maiz_tortilla(D.mz_historia, D.mz_resumen["traslado_24m"])))
+
+    @render.ui
+    def pq_nota_maiz():
+        h = D.mz_historia.set_index("mes")
+        c = (np.expm1(h.loc["2024-07-01"] / 100) * 100).round()
+        t, r = D.mz_traslado, D.mz_resumen
+        exceso = (r["traslado_24m"] * (h.loc["2024-07-01", "maiz_blanco"] - h.loc["2024-07-01", "general"])
+                  / (h.loc["2024-07-01", "tortilla"] - h.loc["2024-07-01", "general"]))
+        return ui.p(f"Cambio acumulado desde julio de 2018. Hasta julio de 2024 el maíz blanco al mayoreo (SNIIM, 42 "
+                    f"centrales de abasto) subió {c['maiz_blanco']:.0f} % y el maíz de Estados Unidos en pesos, "
+                    f"{c['maiz_eeuu_pesos']:.0f} %; la tortilla, {c['tortilla']:.0f} % y el INPC, {c['general']:.0f} %. "
+                    f"De un aumento del maíz blanco llega a la tortilla {100 * t.loc[12, 'traslado']:.0f} % en un año y "
+                    f"{100 * t.loc[24, 'traslado']:.0f} % en dos; casi lo mismo ({100 * t.loc[12, 'traslado_externo']:.0f} y "
+                    f"{100 * t.loc[24, 'traslado_externo']:.0f} %) cuando el maíz se mueve solo por el precio mundial. "
+                    f"La línea punteada es la cuenta: el INPC más {100 * r['traslado_24m']:.0f} % de lo que el maíz subió "
+                    f"por encima de él. Explica cerca de {100 * exceso:.0f} % de lo que la tortilla subió de más. La "
+                    f"tortilla baja con el maíz igual que sube ({100 * r['subidas_12m']:.0f} contra "
+                    f"{100 * r['bajadas_12m']:.0f} % en un año); no bajó desde 2023 porque el maíz blanco bajó poco. "
+                    "Por qué el maíz blanco se separó del mundial (sequía en Sinaloa, precios de garantía, márgenes) "
+                    "queda sin probar.", class_="nota-grafica")
 
     # ------------------------------------------------------------ por entidad
     @reactive.calc

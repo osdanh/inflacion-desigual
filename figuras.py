@@ -646,6 +646,33 @@ def mayoreo_historia(h):
     return linea_cero(fig)
 
 
+NARANJA_MAIZ, VERDE_EEUU = "#E69F00", "#009E73"
+
+
+def maiz_tortilla(h, traslado):
+    """Cambio acumulado desde julio de 2018 (%): maíz blanco al mayoreo, tortilla, la tortilla que da la cuenta
+    (inflación general + traslado x lo que el maíz subió de más), INPC general y maíz de EE. UU. en pesos."""
+    fig = go.Figure()
+    pct = lambda s: 100 * np.expm1(s / 100)
+    series = [("maiz_blanco", "Maíz blanco al mayoreo (SNIIM)", dict(color=NARANJA_MAIZ, width=2.4), "Maíz blanco"),
+              ("tortilla", "Tortilla", dict(color=GUINDA, width=2.8), "Tortilla"),
+              ("cuenta_general_mas_maiz", f"Tortilla según la cuenta (INPC + {100 * traslado:.0f} % del maíz que subió de más)",
+               dict(color=GUINDA, width=2, dash="dash"), "Cuenta"),
+              ("general", "INPC general", dict(color=TENUE, width=2), "INPC"),
+              ("maiz_eeuu_pesos", "Maíz de EE. UU. en pesos", dict(color=VERDE_EEUU, width=2), "Maíz EE. UU.")]
+    finales = []
+    for col, nombre, linea, corto in series:
+        y = pct(h[col])
+        fig.add_scatter(x=h["mes"], y=y, mode="lines", line=linea, name=nombre, hovertemplate="%{y:+.0f} %")
+        finales.append((corto, h["mes"].iloc[-1], float(y.iloc[-1]), linea["color"]))
+    base(fig, 440, derecha=150)
+    eje_tiempo(fig).update_layout(hovermode="x unified", legend=dict(orientation="h", y=1.0, yanchor="bottom"))
+    fig.update_yaxes(ticksuffix=" %")
+    fig.update_xaxes(range=[h["mes"].iloc[0], h["mes"].iloc[-1] + pd.DateOffset(months=1)])
+    etiquetas_finales(fig, finales, sufijo=" %", separacion=0.08)
+    return linea_cero(fig)
+
+
 def mayoreo_productos(p, seleccion=None):
     """Cada fruta o verdura: cuánto más pesa en la canasta del decil I que en la del X (eje x) y cuánto de un salto
     al mayoreo llega al consumidor (eje y). El tamaño es su peso en el INPC."""
